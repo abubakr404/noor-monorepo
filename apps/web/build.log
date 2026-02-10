@@ -1,0 +1,43 @@
+   ▲ Next.js 14.1.0
+
+   Creating an optimized production build ...
+
+[next-intl] Reading request configuration from ./src/i18n.ts is deprecated, please see https://next-intl.dev/blog/next-intl-3-22#i18n-request — you can either move your configuration to ./i18n/request.ts or provide a custom path in your Next.js config:
+
+const withNextIntl = createNextIntlPlugin(
+  './path/to/i18n/request.tsx'
+);
+
+Failed to compile.
+
+./src/app/[locale]/layout.tsx
+Module not found: Can't resolve '@/lib/fonts'
+
+https://nextjs.org/docs/messages/module-not-found
+
+./src/app/[locale]/layout.tsx
+Module not found: Can't resolve '@/components/theme-provider'
+
+https://nextjs.org/docs/messages/module-not-found
+
+../../packages/ui/src/components/ui/button.tsx
+Module not found: Can't resolve '../lib/utils'
+
+https://nextjs.org/docs/messages/module-not-found
+
+Import trace for requested module:
+../../packages/ui/src/components/index.ts
+./src/app/[locale]/page.tsx
+
+./src/middleware.ts:2:0
+Module not found: Can't resolve './src/navigation'
+[0m [90m 1 |[39m [36mimport[39m createMiddleware [36mfrom[39m [32m'next-intl/middleware'[39m[33m;[39m[0m
+[0m[31m[1m>[22m[39m[90m 2 |[39m [36mimport[39m {locales[33m,[39m localePrefix} [36mfrom[39m [32m'./src/navigation'[39m[33m;[39m[0m
+[0m [90m 3 |[39m[0m
+[0m [90m 4 |[39m [36mexport[39m [36mdefault[39m createMiddleware({[0m
+[0m [90m 5 |[39m   [90m// A list of all locales that are supported[39m[0m
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+> Build failed because of webpack errors

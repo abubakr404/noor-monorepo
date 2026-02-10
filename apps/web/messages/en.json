@@ -1,0 +1,11 @@
+{
+  "Index": {
+    "title": "Scalable Monorepo",
+    "description": "A high scalability monorepo boilerplate."
+  },
+  "Theme": {
+      "light": "Light",
+      "dark": "Dark",
+      "system": "System"
+  }
+}

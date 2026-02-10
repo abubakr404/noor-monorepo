@@ -1,0 +1,55 @@
+---
+description: Task workflow, planning, and pattern-application rules for the AI assistant
+alwaysApply: true
+---
+
+# Task Workflow & Planning Rules
+
+- **Implementation planning for large tasks**
+  - When the user asks for a non-trivial feature or refactor (anything that will touch multiple files, or require more than ~3 steps), first create a concise **Implementation Plan** before editing any files, unless the user explicitly provided a clear step-by-step plan to follow.
+  - The plan should be short but structured (bullet list or numbered list), focusing on: high-level phases, affected areas/files, and any important decisions or trade-offs.
+  - Reuse and update the plan as work progresses, instead of rewriting from scratch.
+
+- **Progress tracking for big tasks**
+  - For any large / multi-session task (e.g. "big refactor", "new module", "complex feature"), create or update a **progress markdown file** for that task, unless the user asks not to.
+  - Prefer a file close to the work, e.g. a project `PROGRESS.md` or a feature-specific progress file that the user names, such as `backend-setup/14-DATA_FACADE_REFACTOR_PROGRESS.md`.
+  - Use clear sections like: "Task description", "Implementation plan", "Completed steps", "Remaining steps", and update them as work is done.
+  - Keep the progress notes concise and focused on decisions, completed steps, and blockers, to avoid wasting tokens.
+
+- **Never skip planned steps on big tasks**
+  - When a plan is created for a big task, treat it as a checklist: **all planned steps must be implemented** (or explicitly cancelled with a short note and reason) before considering the task complete.
+  - If the user changes requirements mid-task, update the plan and progress file to reflect the new scope, and clearly mark any steps that are no longer needed as cancelled instead of silently dropping them.
+
+# Token & Context Efficiency
+
+- **Be concise and information-dense**
+  - Default to short answers that contain the minimum necessary detail to move the task forward, unless the user asks for deep explanations.
+  - Avoid restating large chunks of existing code in summaries; reference files/functions instead, or show only the smallest relevant snippet.
+
+- **Summaries and key project knowledge**
+  - Prefer to keep **project understanding** and **key decisions** in project markdown files (e.g. `README.md`, architecture notes, or dedicated `backend-setup/*.md` docs) rather than in long assistant messages.
+  - When helpful, update or propose small updates to these docs so that future tasks can rely on them as a fast source of context instead of re-inferring everything.
+  - Use short, structured summaries (headings + bullets) that can be quickly skimmed to reconstruct context for future tasks.
+
+# Patterned / Repetitive Changes
+
+- **Single-example first for new patterns**
+  - When implementing a **new pattern** or a change that will be applied to many similar places (e.g. new repository pattern, new middleware shape, refactor across modules), **first apply the pattern to a single simple example**.
+  - After implementing that first example, stop and present it clearly to the user for confirmation before applying it broadly.
+
+- **Iterate on the example before rollout**
+  - If the user requests adjustments, apply corrections to the single example first.
+  - Once the example is approved, **update the implementation plan** to reflect the approved pattern and only then roll it out to the rest of the codebase.
+
+- **Consistent rollout after approval**
+  - After pattern approval, apply the pattern consistently to all relevant locations listed in the plan, keeping the user updated in batches (e.g. "applied pattern to all controllers" rather than file-by-file noise).
+  - If you discover new variations or edge-cases while rolling out, pause broad changes, discuss the variation briefly with the user, and, if the pattern needs to change, go back to updating a small example first.
+
+# General Behavior
+
+- **Bias for action, but respect checkpoints**
+  - Move work forward proactively, but respect the checkpoints above:
+    - Plan first for big tasks.
+    - Single-example confirmation for new patterns.
+    - Keep progress and decisions in concise markdown docs.
+  - When unsure between multiple reasonable approaches, briefly explain the options and pick one, unless the user has clearly stated a preference or existing convention.

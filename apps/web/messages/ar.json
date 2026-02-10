@@ -1,0 +1,11 @@
+{
+  "Index": {
+    "title": "monorepo قابل للتوسع",
+    "description": "قالب monorepo عالي القابلية للتوسع."
+  },
+  "Theme": {
+    "light": "فاتح",
+    "dark": "داكن",
+    "system": "نظام"
+  }
+}

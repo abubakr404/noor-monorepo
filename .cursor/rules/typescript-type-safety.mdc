@@ -1,0 +1,80 @@
+---
+description: TypeScript type-safety and typing best practices for this project
+globs: "**/*.ts"
+alwaysApply: false
+---
+
+# TypeScript Type-Safety
+
+This rule defines how to use types so that the codebase stays type-safe, maintainable, and consistent. Follow it when writing or reviewing TypeScript.
+
+---
+
+## 1. Avoid `any` Unless There Is No Alternative
+
+- **Prefer**: Specific types, `unknown`, or generics.
+- **Use `any` only when**: No type exists and creating one is impractical (e.g. generated code, rare escape hatches). If you use `any`, add a short comment explaining why.
+- **Prefer `unknown` over `any`**: When the shape is not known, use `unknown` and narrow or assert at the use site.
+
+---
+
+## 2. Import Required Types; Use Specific Types
+
+- **Import** types from the correct module (e.g. Prisma model files under `src/generated/prisma/models/`, shared types, DTOs).
+- **Use specific types** for parameters and return values (e.g. `UserWhereInput`, `CourseReviewModel`, `PaymentWhereInput`) instead of `unknown` when the type exists.
+- **Unify import style** in a file: use either relative paths (e.g. `../../generated/prisma/...`) or project alias (e.g. `src/...`) consistently; prefer relative within `src/` when both are used elsewhere.
+
+---
+
+## 3. API / External Data: Return `Promise<unknown>`, Type at Use Site
+
+- **Functions that call external APIs or return unvalidated data**: Return `Promise<unknown>` (or `unknown` for sync).
+- **At the call site**: Type the result explicitly (e.g. type assertion, type guard, or validation) before using it. Do not assume the shape.
+- **Internal repositories/services** that use Prisma: Prefer returning specific model types (e.g. `Promise<UserModel | null>`) when the type is known; use `unknown` only when the shape is truly dynamic or comes from raw/API data.
+
+---
+
+## 4. Prisma Repositories
+
+- Use **WhereInput**, **Include**, **Select**, **Model** types from the generated Prisma model files for arguments and return types.
+- For **aggregations** (e.g. `_sum`), use the generated aggregate types or a narrow type (e.g. `{ _sum: { amount: number | null } }`) instead of `unknown` when possible.
+- Prefer **no `as any`** in repository code; use `as never` only as a last resort when delegating to Prisma with `unknown` args and document why.
+
+---
+
+## 5. Controllers / File Uploads
+
+- **File parameters**: Use a proper type instead of `any` (e.g. `Express.Multer.File` if `@types/multer` is installed, or a project-defined type that matches the actual file object: `fieldname`, `originalname`, `mimetype`, `size`, `buffer`, etc.).
+
+---
+
+## 6. Base / Generic Code
+
+- In **generic or base classes** (e.g. shared repository), prefer `unknown` for generic arguments and use **generics** (`<T>`, `<TResult = T>`) for return types so callers get correct inference.
+- When delegating to untyped or complex APIs (e.g. Prisma delegate with `unknown` args), use the minimal assertion needed (e.g. `as never`) and add a one-line comment, rather than `as any`.
+
+---
+
+## 7. Consistency and Readability
+
+- Prefer **`type` for object shapes** and **`interface`** when you need declaration merging or extendability.
+- Use **`Promise<Type>`** explicitly for async return types.
+- Prefer **optional parameters** with `?` and **union with `null`** where the value can be absent (e.g. `T | null` for “maybe missing”).
+
+---
+
+## How to Work With This Skill
+
+- **When writing new code**: Prefer specific types and imports; avoid `any`; use `unknown` and type at use site for API/unvalidated data.
+- **When reviewing**: Check parameters and return types for specificity; flag `any` unless justified with a comment; ensure API/raw functions return `Promise<unknown>` and call sites type the result.
+- **When refactoring**: Replace `any` with proper types or `unknown`; unify import style in a file; add missing WhereInput/Model/Include types from Prisma model files.
+
+## Maintenance Note
+
+**Update this document when:**
+
+- You get feedback or comments (e.g. in code review or from the project owner) about typing, `any`, `unknown`, or API/Prisma patterns.
+- New conventions are adopted (e.g. a new way to type file uploads or API responses).
+- You fix a recurring type-safety issue and want the fix to be the default for future work.
+
+Keep this “Maintenance note” section and add a short “Changelog” or “Updates” subsection below if you record specific changes (optional).

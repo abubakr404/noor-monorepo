@@ -1,0 +1,26 @@
+{
+  "name": "@repo/config",
+  "version": "0.0.0",
+  "private": true,
+  "files": [
+    "eslint-preset.js",
+    "tsconfig.base.json",
+    "tailwind.config.ts"
+  ],
+  "exports": {
+    "./eslint": "./eslint-preset.js",
+    "./typescript": "./tsconfig.base.json",
+    "./tailwind": "./tailwind.config.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "eslint": "^8.0.0",
+    "eslint-config-next": "14.1.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-react": "^7.33.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "typescript": "^5.3.0",
+    "tailwindcss": "^3.4.0",
+    "prettier": "^3.2.0"
+  }
+}
