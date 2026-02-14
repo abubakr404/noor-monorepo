@@ -1,0 +1,137 @@
+generator client {
+  provider     = "prisma-client"
+  output       = "../src/generated/prisma"
+  moduleFormat = "cjs"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ─── Auth ────────────────────────────────────────────────
+
+model User {
+  id            String           @id @default(cuid())
+  email         String?          @unique
+  passwordHash  String?
+  name          String?
+  provider      String           @default("local")
+  providerId    String?
+  avatarUrl     String?
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
+
+  preferences   UserPreferences?
+  progress      DailyProgress[]
+  counterState  CounterState?
+  favorites     Favorite[]
+  streak        Streak?
+  refreshTokens RefreshToken[]
+}
+
+model RefreshToken {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  token     String   @unique
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+}
+
+model UserPreferences {
+  id               String  @id @default(cuid())
+  userId           String  @unique
+  user             User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  language         String  @default("ar")
+  theme            String  @default("system")
+  counterMode      String  @default("interactive")
+  soundEnabled     Boolean @default(true)
+  vibrationEnabled Boolean @default(true)
+}
+
+// ─── Azkar Content ───────────────────────────────────────
+
+model Zikr {
+  id              Int      @id @default(autoincrement())
+  arabicText      String
+  arabicTextClean String?
+  translationEn   String?
+  translationAr   String?
+  transliteration String?
+  repeatCount     Int      @default(1)
+  reference       String?
+  virtueAr        String?
+  virtueEn        String?
+  category        String
+  orderIndex      Int
+  version         Int      @default(1)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@index([category, orderIndex])
+}
+
+model CounterPreset {
+  id          String @id @default(cuid())
+  labelAr     String
+  labelEn     String
+  targetCount Int
+  orderIndex  Int
+  version     Int    @default(1)
+}
+
+model ContentVersion {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  version   Int      @default(1)
+  updatedAt DateTime @updatedAt
+}
+
+// ─── User Progress ───────────────────────────────────────
+
+model DailyProgress {
+  id           String   @id @default(cuid())
+  userId       String
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  date         String
+  category     String
+  completedIds String
+  inProgress   String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@unique([userId, date, category])
+}
+
+// ─── Counter State ───────────────────────────────────────
+
+model CounterState {
+  id          String  @id @default(cuid())
+  userId      String  @unique
+  user        User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  current     Int     @default(0)
+  target      Int     @default(33)
+  presetId    String?
+  customLabel String?
+}
+
+// ─── Favorites ───────────────────────────────────────────
+
+model Favorite {
+  id     String @id @default(cuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  zikrId Int
+
+  @@unique([userId, zikrId])
+}
+
+// ─── Streak ──────────────────────────────────────────────
+
+model Streak {
+  id       String @id @default(cuid())
+  userId   String @unique
+  user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  count    Int    @default(0)
+  lastDate String
+}

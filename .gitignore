@@ -7,3 +7,6 @@ coverage
 .next/
 build/
 .expo/
+
+# Prisma generated client
+apps/api/src/generated/
