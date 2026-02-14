@@ -1,0 +1,51 @@
+{
+  "nav": {
+    "home": "الرئيسية",
+    "counter": "العدّاد",
+    "favorites": "المفضلة",
+    "settings": "الإعدادات"
+  },
+  "home": {
+    "subtitle": "ابدأ يومك بالذكر",
+    "counter": "عدّاد التسبيح",
+    "counterDesc": "سبّح واحصِ"
+  },
+  "azkar": {
+    "morning": "أذكار الصباح",
+    "evening": "أذكار المساء",
+    "night": "أذكار النوم",
+    "loading": "جارٍ التحميل...",
+    "back": "رجوع"
+  },
+  "detail": {
+    "next": "التالي",
+    "backToHome": "العودة للرئيسية",
+    "readTimes": "اقرأها {{count}} مرات"
+  },
+  "counter": {
+    "title": "عدّاد التسبيح",
+    "reset": "إعادة تعيين",
+    "targetReached": "أحسنت! أكملت العدد"
+  },
+  "favorites": {
+    "title": "المفضلة",
+    "empty": "لا توجد مفضلات بعد",
+    "emptyHint": "أضف أذكارك المفضلة بالنقر على القلب"
+  },
+  "settings": {
+    "title": "الإعدادات",
+    "language": "اللغة",
+    "theme": "المظهر",
+    "counterMode": "وضع العدّاد",
+    "interactive": "تفاعلي",
+    "display": "عرض فقط",
+    "resetProgress": "إعادة تعيين التقدم",
+    "arabic": "العربية",
+    "english": "English",
+    "light": "فاتح",
+    "dark": "داكن"
+  },
+  "streak": {
+    "day": "اليوم {{count}}"
+  }
+}
