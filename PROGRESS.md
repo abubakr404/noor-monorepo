@@ -1,6 +1,6 @@
 # Zikr App - Implementation Progress
 
-## Overall Status: All Core Features Implemented
+## Overall Status: Full Implementation Complete (16 Batches)
 
 ---
 
@@ -134,7 +134,32 @@ packages/
   data/     Hardcoded azkar with tashkeel (morning, evening, night)
 ```
 
+## Batch 14: Mobile Full API Client + Hooks
+**Status**: Complete
+- Typed AsyncStorage wrapper (storage.ts)
+- Full API client (20 endpoints: auth, azkar, progress, counter, favorites, preferences)
+- JWT token management with restore + refresh
+- 9 hooks: useAuth, useAzkar, useTimePeriod, useProgress, useCounter, useFavorites, useStreak, usePreferences, useHaptics
+- All hooks use queueMicrotask for API sync outside state updaters
+
+## Batch 15: Mobile Components + Auth + Enhanced Screens
+**Status**: Complete
+- 6 RN components: StarBadge (SVG octagram), ZikrCard, PeriodCard, StreakBadge, CounterCircle
+- Login + Register auth screens with form validation
+- Enhanced all tab screens to use proper hooks and components
+- Enhanced azkar detail with interactive/display modes + haptics + Next/Back
+- TypeScript: strict mode, clean compilation
+
+## Batch 16: CORS Fix + Integration Test
+**Status**: Complete
+- Fixed CORS to allow localhost:3002 (Next.js dev port)
+- Full-stack integration test: API + Web verified in browser
+- All pages rendering: Home, Azkar list, Azkar detail, Counter, Settings
+- Gold design, RTL Arabic, dark mode: all working correctly
+
+---
+
 ## Build Status
 - API: `pnpm build` PASS
-- Web: `pnpm build` PASS (9 routes)
+- Web: `pnpm dev` verified in browser (all pages working)
 - Mobile: `tsc --noEmit` PASS
