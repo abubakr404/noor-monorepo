@@ -22,6 +22,7 @@
     "@nestjs/passport": "^11.0.5",
     "@nestjs/platform-express": "^10.0.0",
     "@prisma/adapter-pg": "^7.4.0",
+    "@prisma/client": "^7.4.0",
     "@repo/data": "workspace:^",
     "apple-signin-auth": "^2.0.0",
     "bcryptjs": "^3.0.3",
