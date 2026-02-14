@@ -1,18 +1,26 @@
 import type { Config } from "tailwindcss";
 
+interface DesignTokens {
+  colors: Record<string, unknown>;
+  borderRadius: Record<string, string>;
+  fontFamily: Record<string, string[]>;
+  fontSize: Record<string, [string, { lineHeight: string }]>;
+}
+
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const tokens: DesignTokens = require("./tailwind/design-tokens");
+
 const config: Config = {
   content: [
     "../../packages/ui/**/*.{js,ts,jsx,tsx}",
-    "./src/**/*.{js,ts,jsx,tsx}",
-    "./app/**/*.{js,ts,jsx,tsx}",
-    "./components/**/*.{js,ts,jsx,tsx}",
   ],
+  darkMode: "class",
   theme: {
     extend: {
-      fontFamily: {
-        sans: ["Cairo", "sans-serif"],
-      },
       colors: {
+        // Design-token colours (gold, dark, light)
+        ...tokens.colors,
+        // Shadcn CSS-variable colours
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
@@ -47,9 +55,17 @@ const config: Config = {
           foreground: "hsl(var(--card-foreground))",
         },
       },
+      borderRadius: {
+        ...tokens.borderRadius,
+        lg: "var(--radius)",
+        md: "calc(var(--radius) - 2px)",
+        sm: "calc(var(--radius) - 4px)",
+      },
+      fontFamily: tokens.fontFamily,
+      fontSize: tokens.fontSize,
     },
   },
-  plugins: [],
+  plugins: [require("tailwindcss-animate")],
 };
 
 export default config;

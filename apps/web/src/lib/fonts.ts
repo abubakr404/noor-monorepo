@@ -1,7 +1,8 @@
-import { Cairo } from 'next/font/google';
+import { Tajawal } from "next/font/google";
 
-export const cairo = Cairo({
-    subsets: ['latin', 'arabic'],
-    display: 'swap',
-    variable: '--font-cairo',
+export const tajawal = Tajawal({
+  subsets: ["latin", "arabic"],
+  weight: ["200", "300", "400", "500", "700", "800", "900"],
+  display: "swap",
+  variable: "--font-tajawal",
 });

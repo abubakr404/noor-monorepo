@@ -2,12 +2,12 @@ import type { Config } from "tailwindcss";
 import sharedConfig from "@repo/config/tailwind";
 
 const config: Config = {
-  ...sharedConfig,
-  content: [
-    ...(sharedConfig.content as string[]),
-    "./src/**/*.{js,ts,jsx,tsx}",
-  ],
   presets: [sharedConfig],
+  content: [
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "../../packages/ui/src/**/*.{js,ts,jsx,tsx}",
+  ],
+  darkMode: "class",
 };
 
 export default config;

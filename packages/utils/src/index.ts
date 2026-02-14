@@ -6,3 +6,6 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export const IS_SERVER = typeof window === "undefined";
+
+export { getCurrentTimePeriod, getGreeting } from "./time";
+export { shouldUpdate } from "./version";
