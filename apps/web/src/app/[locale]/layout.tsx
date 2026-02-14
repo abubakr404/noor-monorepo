@@ -5,6 +5,7 @@ import "../globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { QueryProvider } from "@/providers/query-provider";
 import { AuthProvider } from "@/providers/auth-provider";
+import { BottomNav } from "@/components/bottom-nav";
 
 export const metadata = {
   title: "ذِكر | Zikr",
@@ -40,6 +41,7 @@ export default async function RootLayout({
             <QueryProvider>
               <AuthProvider>
                 <main className="min-h-screen pb-20">{children}</main>
+                <BottomNav />
               </AuthProvider>
             </QueryProvider>
           </ThemeProvider>
