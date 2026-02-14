@@ -5,6 +5,10 @@ import { AppService } from "./app.service";
 import { PrismaModule } from "./prisma/prisma.module";
 import { AuthModule } from "./modules/auth/auth.module";
 import { AzkarModule } from "./modules/azkar/azkar.module";
+import { ProgressModule } from "./modules/progress/progress.module";
+import { CounterModule } from "./modules/counter/counter.module";
+import { FavoritesModule } from "./modules/favorites/favorites.module";
+import { PreferencesModule } from "./modules/preferences/preferences.module";
 
 @Module({
   imports: [
@@ -12,6 +16,10 @@ import { AzkarModule } from "./modules/azkar/azkar.module";
     PrismaModule,
     AuthModule,
     AzkarModule,
+    ProgressModule,
+    CounterModule,
+    FavoritesModule,
+    PreferencesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
