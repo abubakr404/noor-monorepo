@@ -1,10 +1,24 @@
 import { View, Text, Pressable } from "react-native";
-import { useState } from "react";
+import { useCounter } from "../../src/hooks/use-counter";
+import { useAuth } from "../../src/hooks/use-auth";
+import { useHaptics } from "../../src/hooks/use-haptics";
+import { CounterCircle } from "../../src/components/counter-circle";
 
 export default function CounterScreen() {
-  const [count, setCount] = useState(0);
-  const target = 33;
-  const isComplete = count >= target;
+  const { isAuthenticated } = useAuth();
+  const counter = useCounter(isAuthenticated);
+  const haptics = useHaptics();
+
+  const isComplete = counter.current >= counter.target && counter.target > 0;
+
+  const handleTap = () => {
+    if (isComplete) return;
+    counter.increment();
+    haptics.light();
+    if (counter.current + 1 >= counter.target) {
+      haptics.success();
+    }
+  };
 
   return (
     <View className="flex-1 bg-dark-base items-center justify-center px-4">
@@ -12,28 +26,27 @@ export default function CounterScreen() {
         عدّاد التسبيح
       </Text>
 
-      {/* Counter circle */}
-      <Pressable
-        onPress={() => !isComplete && setCount((c) => c + 1)}
-        className="w-56 h-56 rounded-full border-4 border-gold-500 items-center justify-center mb-8"
-      >
-        <Text
-          className={`text-5xl font-extrabold ${isComplete ? "text-gold-500" : "text-gold-200"}`}
-        >
-          {count}
+      <CounterCircle
+        current={counter.current}
+        target={counter.target}
+        onTap={handleTap}
+      />
+
+      {counter.customLabel && (
+        <Text className="text-lg font-medium text-gold-300 mt-4">
+          {counter.customLabel}
         </Text>
-        <Text className="text-sm text-gold-700 mt-1">/ {target}</Text>
-      </Pressable>
+      )}
 
       {isComplete && (
-        <Text className="text-sm text-gold-500 font-medium mb-4">
+        <Text className="text-sm text-gold-500 font-medium mt-4">
           أحسنت! أكملت العدد
         </Text>
       )}
 
       <Pressable
-        onPress={() => setCount(0)}
-        className="px-6 py-3 rounded-xl border border-gold-800/30"
+        onPress={counter.reset}
+        className="mt-6 px-6 py-3 rounded-xl border border-gold-800/30"
       >
         <Text className="text-gold-700 font-medium">إعادة تعيين</Text>
       </Pressable>
