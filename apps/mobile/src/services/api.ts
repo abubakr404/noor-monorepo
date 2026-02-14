@@ -21,8 +21,9 @@ import type {
 } from "@repo/types";
 import { StorageKeys, getItem, setItem } from "./storage";
 
-// Use 10.0.2.2 for Android emulator, localhost for iOS sim
-const API_URL = "http://10.0.2.2:3001/api/v1";
+// LAN IP for real device testing (both phone and PC must be on same network)
+// Change this to your computer's IP if it changes
+const API_URL = "http://10.234.198.199:3001/api/v1";
 
 let accessToken: string | null = null;
 

@@ -13,11 +13,7 @@ async function bootstrap(): Promise<void> {
 
   // Enable CORS for frontend
   app.enableCors({
-    origin: [
-      "http://localhost:3000",
-      "http://localhost:3002",
-      "http://localhost:8081",
-    ],
+    origin: true, // Allow all origins in development (mobile + web)
     credentials: true,
   });
 
