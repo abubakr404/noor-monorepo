@@ -11,6 +11,8 @@ export const metadata = {
   title: "ذِكر | Zikr",
   description:
     "تطبيق الأذكار والتسبيح — Morning, Evening & Night Azkar with Counter",
+  manifest: "/manifest.json",
+  themeColor: "#F59E0B",
 };
 
 export default async function RootLayout({
