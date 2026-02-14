@@ -1,11 +1,90 @@
 {
-  "Index": {
-    "title": "monorepo قابل للتوسع",
-    "description": "قالب monorepo عالي القابلية للتوسع."
+  "Index": { "title": "ذِكر", "description": "أذكار وتسبيح" },
+  "Nav": {
+    "home": "الرئيسية",
+    "counter": "العدّاد",
+    "favorites": "المفضلة",
+    "settings": "الإعدادات"
   },
-  "Theme": {
+  "Home": {
+    "subtitle": "ابدأ يومك بالذكر",
+    "counter": "عدّاد التسبيح",
+    "counterDesc": "سبّح واحصِ",
+    "loginPrompt": "سجّل دخولك لحفظ تقدمك"
+  },
+  "Azkar": {
+    "title": {
+      "morning": "أذكار الصباح",
+      "evening": "أذكار المساء",
+      "night": "أذكار النوم"
+    },
+    "loading": "جارٍ التحميل...",
+    "resetAll": "إعادة تعيين الكل",
+    "progress": "{completed} / {total} مكتمل"
+  },
+  "ZikrDetail": {
+    "readTimes": "اقرأها {count} مرات",
+    "next": "التالي",
+    "backToHome": "العودة للرئيسية",
+    "tapToCount": "انقر للعد"
+  },
+  "Counter": {
+    "title": "عدّاد التسبيح",
+    "reset": "إعادة تعيين",
+    "targetReached": "أحسنت! أكملت العدد",
+    "custom": "مخصص"
+  },
+  "Favorites": {
+    "title": "المفضلة",
+    "empty": "لا توجد مفضلات بعد",
+    "emptyHint": "أضف أذكارك المفضلة بالنقر على القلب"
+  },
+  "Settings": {
+    "title": "الإعدادات",
+    "language": "اللغة",
+    "theme": "المظهر",
+    "counterMode": "وضع العدّاد",
+    "interactive": "تفاعلي",
+    "display": "عرض فقط",
+    "sound": "الصوت",
+    "vibration": "الاهتزاز",
+    "account": "الحساب",
+    "login": "تسجيل الدخول",
+    "logout": "تسجيل الخروج",
+    "resetProgress": "إعادة تعيين التقدم",
+    "resetConfirm": "هل أنت متأكد؟ سيتم حذف كل تقدمك.",
+    "arabic": "العربية",
+    "english": "English",
     "light": "فاتح",
     "dark": "داكن",
     "system": "نظام"
+  },
+  "Auth": {
+    "login": "تسجيل الدخول",
+    "register": "إنشاء حساب",
+    "email": "البريد الإلكتروني",
+    "password": "كلمة المرور",
+    "name": "الاسم",
+    "orContinueWith": "أو تابع عبر",
+    "google": "Google",
+    "apple": "Apple",
+    "noAccount": "ليس لديك حساب؟",
+    "hasAccount": "لديك حساب؟",
+    "signUp": "سجّل الآن",
+    "signIn": "سجّل دخولك"
+  },
+  "Streak": {
+    "day": "اليوم {count}"
+  },
+  "Period": {
+    "morning": "أذكار الصباح",
+    "evening": "أذكار المساء",
+    "night": "أذكار النوم"
+  },
+  "Theme": { "light": "فاتح", "dark": "داكن", "system": "نظام" },
+  "Errors": {
+    "generic": "حدث خطأ، حاول مرة أخرى",
+    "invalidCredentials": "بريد إلكتروني أو كلمة مرور غير صحيحة",
+    "emailExists": "البريد الإلكتروني مسجل بالفعل"
   }
 }
