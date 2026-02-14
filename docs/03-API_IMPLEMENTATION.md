@@ -8,38 +8,38 @@
 
 ## Summary
 
-| Metric               | Value                                                                  |
-| -------------------- | ---------------------------------------------------------------------- |
-| **Total files**      | ~75+                                                                   |
-| **Modules**          | 6 (auth, azkar, progress, counter, favorites, preferences)             |
-| **Endpoints**        | 18                                                                     |
-| **Phases**           | 10 + Verification                                                      |
-| **Dependencies**     | See [Phase 1, Step 1](#step-1-install-all-dependencies)                |
+| Metric           | Value                                                      |
+| ---------------- | ---------------------------------------------------------- |
+| **Total files**  | ~75+                                                       |
+| **Modules**      | 6 (auth, azkar, progress, counter, favorites, preferences) |
+| **Endpoints**    | 18                                                         |
+| **Phases**       | 10 + Verification                                          |
+| **Dependencies** | See [Phase 1, Step 1](#step-1-install-all-dependencies)    |
 
 ### Endpoints Overview
 
-| Module      | Method   | Path                       | Auth     |
-| ----------- | -------- | -------------------------- | -------- |
-| Auth        | POST     | `/auth/register`           | Public   |
-| Auth        | POST     | `/auth/login`              | Public   |
-| Auth        | POST     | `/auth/refresh`            | Public   |
-| Auth        | POST     | `/auth/google`             | Public   |
-| Auth        | POST     | `/auth/apple`              | Public   |
-| Auth        | GET      | `/auth/me`                 | JWT      |
-| Azkar       | GET      | `/azkar?category=morning`  | Public   |
-| Azkar       | GET      | `/azkar/version`           | Public   |
-| Azkar       | GET      | `/azkar/all`               | Public   |
-| Azkar       | GET      | `/counter-presets`         | Public   |
-| Progress    | GET      | `/progress?date=...`       | JWT      |
-| Progress    | PUT      | `/progress`                | JWT      |
-| Progress    | GET      | `/progress/streak`         | JWT      |
-| Counter     | GET      | `/counter`                 | JWT      |
-| Counter     | PUT      | `/counter`                 | JWT      |
-| Favorites   | GET      | `/favorites`               | JWT      |
-| Favorites   | POST     | `/favorites/:zikrId`       | JWT      |
-| Favorites   | DELETE   | `/favorites/:zikrId`       | JWT      |
-| Preferences | GET      | `/preferences`             | JWT      |
-| Preferences | PATCH    | `/preferences`             | JWT      |
+| Module      | Method | Path                      | Auth   |
+| ----------- | ------ | ------------------------- | ------ |
+| Auth        | POST   | `/auth/register`          | Public |
+| Auth        | POST   | `/auth/login`             | Public |
+| Auth        | POST   | `/auth/refresh`           | Public |
+| Auth        | POST   | `/auth/google`            | Public |
+| Auth        | POST   | `/auth/apple`             | Public |
+| Auth        | GET    | `/auth/me`                | JWT    |
+| Azkar       | GET    | `/azkar?category=morning` | Public |
+| Azkar       | GET    | `/azkar/version`          | Public |
+| Azkar       | GET    | `/azkar/all`              | Public |
+| Azkar       | GET    | `/counter-presets`        | Public |
+| Progress    | GET    | `/progress?date=...`      | JWT    |
+| Progress    | PUT    | `/progress`               | JWT    |
+| Progress    | GET    | `/progress/streak`        | JWT    |
+| Counter     | GET    | `/counter`                | JWT    |
+| Counter     | PUT    | `/counter`                | JWT    |
+| Favorites   | GET    | `/favorites`              | JWT    |
+| Favorites   | POST   | `/favorites/:zikrId`      | JWT    |
+| Favorites   | DELETE | `/favorites/:zikrId`      | JWT    |
+| Preferences | GET    | `/preferences`            | JWT    |
+| Preferences | PATCH  | `/preferences`            | JWT    |
 
 ### Dependencies to Install
 
@@ -247,10 +247,10 @@ This generates the client into `src/generated/prisma/` and creates the initial m
 Uses `@prisma/adapter-pg` with `pg.Pool` for connection pooling (Prisma 7 pattern):
 
 ```typescript
-import { Injectable, OnModuleInit, OnModuleDestroy } from '@nestjs/common';
-import { PrismaClient } from '../generated/prisma/client';
-import { PrismaPg } from '@prisma/adapter-pg';
-import pg from 'pg';
+import { Injectable, OnModuleInit, OnModuleDestroy } from "@nestjs/common";
+import { PrismaClient } from "../generated/prisma/client";
+import { PrismaPg } from "@prisma/adapter-pg";
+import pg from "pg";
 
 @Injectable()
 export class PrismaService
@@ -284,8 +284,8 @@ export class PrismaService
 - [ ] Create `apps/api/src/prisma/prisma.module.ts`
 
 ```typescript
-import { Global, Module } from '@nestjs/common';
-import { PrismaService } from './prisma.service';
+import { Global, Module } from "@nestjs/common";
+import { PrismaService } from "./prisma.service";
 
 @Global()
 @Module({
@@ -327,9 +327,9 @@ export interface IRepository {
 Abstract base class. Each module's repository extends this and provides `getDelegate()`:
 
 ```typescript
-import { Injectable } from '@nestjs/common';
-import { PrismaService } from '../../prisma/prisma.service';
-import { IRepository } from './irepository.interface';
+import { Injectable } from "@nestjs/common";
+import { PrismaService } from "../../prisma/prisma.service";
+import { IRepository } from "./irepository.interface";
 
 @Injectable()
 export abstract class PrismaRepository<T = unknown> implements IRepository {
@@ -409,7 +409,7 @@ export abstract class PrismaRepository<T = unknown> implements IRepository {
 Extracts `userId` from the JWT-authenticated request:
 
 ```typescript
-import { createParamDecorator, ExecutionContext } from '@nestjs/common';
+import { createParamDecorator, ExecutionContext } from "@nestjs/common";
 
 export const CurrentUser = createParamDecorator(
   (data: string | undefined, ctx: ExecutionContext) => {
@@ -425,11 +425,11 @@ export const CurrentUser = createParamDecorator(
 - [ ] Create `apps/api/src/common/guards/jwt-auth.guard.ts`
 
 ```typescript
-import { Injectable } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
+import { Injectable } from "@nestjs/common";
+import { AuthGuard } from "@nestjs/passport";
 
 @Injectable()
-export class JwtAuthGuard extends AuthGuard('jwt') {}
+export class JwtAuthGuard extends AuthGuard("jwt") {}
 ```
 
 ### Step 10: OptionalAuthGuard
@@ -439,11 +439,11 @@ export class JwtAuthGuard extends AuthGuard('jwt') {}
 Allows unauthenticated access — attaches user if token present, does not throw if absent:
 
 ```typescript
-import { Injectable, ExecutionContext } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
+import { Injectable, ExecutionContext } from "@nestjs/common";
+import { AuthGuard } from "@nestjs/passport";
 
 @Injectable()
-export class OptionalAuthGuard extends AuthGuard('jwt') {
+export class OptionalAuthGuard extends AuthGuard("jwt") {
   handleRequest(err: any, user: any) {
     // Don't throw if no user — just return null
     return user || null;
@@ -467,9 +467,9 @@ import {
   NestInterceptor,
   ExecutionContext,
   CallHandler,
-} from '@nestjs/common';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+} from "@nestjs/common";
+import { Observable } from "rxjs";
+import { map } from "rxjs/operators";
 
 export interface ApiResponse<T> {
   success: boolean;
@@ -477,8 +477,14 @@ export interface ApiResponse<T> {
 }
 
 @Injectable()
-export class ResponseInterceptor<T> implements NestInterceptor<T, ApiResponse<T>> {
-  intercept(context: ExecutionContext, next: CallHandler): Observable<ApiResponse<T>> {
+export class ResponseInterceptor<T> implements NestInterceptor<
+  T,
+  ApiResponse<T>
+> {
+  intercept(
+    context: ExecutionContext,
+    next: CallHandler,
+  ): Observable<ApiResponse<T>> {
     return next.handle().pipe(
       map((data) => ({
         success: true,
@@ -502,8 +508,8 @@ import {
   ArgumentsHost,
   HttpException,
   HttpStatus,
-} from '@nestjs/common';
-import { Response } from 'express';
+} from "@nestjs/common";
+import { Response } from "express";
 
 @Catch()
 export class HttpExceptionFilter implements ExceptionFilter {
@@ -519,14 +525,15 @@ export class HttpExceptionFilter implements ExceptionFilter {
     const message =
       exception instanceof HttpException
         ? exception.getResponse()
-        : 'Internal server error';
+        : "Internal server error";
 
     response.status(status).json({
       success: false,
       error: {
         statusCode: status,
-        message: typeof message === 'string' ? message : (message as any).message,
-        error: typeof message === 'string' ? message : (message as any).error,
+        message:
+          typeof message === "string" ? message : (message as any).message,
+        error: typeof message === "string" ? message : (message as any).error,
       },
     });
   }
@@ -562,7 +569,7 @@ export interface UserEntity {
 - [ ] Create `apps/api/src/modules/auth/domain/interfaces/user-repository.token.ts`
 
 ```typescript
-export const USER_REPOSITORY = Symbol('USER_REPOSITORY');
+export const USER_REPOSITORY = Symbol("USER_REPOSITORY");
 ```
 
 ### Step 15: Domain — IUserRepository
@@ -570,8 +577,8 @@ export const USER_REPOSITORY = Symbol('USER_REPOSITORY');
 - [ ] Create `apps/api/src/modules/auth/domain/interfaces/iuser.repository.ts`
 
 ```typescript
-import { PrismaRepository } from '../../../../shared/repositories/prisma.repository';
-import { UserEntity } from '../entities/user.entity';
+import { PrismaRepository } from "../../../../shared/repositories/prisma.repository";
+import { UserEntity } from "../entities/user.entity";
 
 export interface IUserRepository extends PrismaRepository<UserEntity> {}
 ```
@@ -581,10 +588,10 @@ export interface IUserRepository extends PrismaRepository<UserEntity> {}
 - [ ] Create `apps/api/src/modules/auth/infrastructure/repositories/user.repository.ts`
 
 ```typescript
-import { Injectable } from '@nestjs/common';
-import { PrismaRepository } from '../../../../shared/repositories/prisma.repository';
-import { PrismaService } from '../../../../prisma/prisma.service';
-import { IUserRepository } from '../../domain/interfaces/iuser.repository';
+import { Injectable } from "@nestjs/common";
+import { PrismaRepository } from "../../../../shared/repositories/prisma.repository";
+import { PrismaService } from "../../../../prisma/prisma.service";
+import { IUserRepository } from "../../domain/interfaces/iuser.repository";
 
 @Injectable()
 export class UserRepository
@@ -606,7 +613,7 @@ export class UserRepository
 - [ ] Create `apps/api/src/modules/auth/application/dto/register.dto.ts`
 
 ```typescript
-import { IsEmail, IsString, MinLength, IsOptional } from 'class-validator';
+import { IsEmail, IsString, MinLength, IsOptional } from "class-validator";
 
 export class RegisterDto {
   @IsEmail()
@@ -627,7 +634,7 @@ export class RegisterDto {
 - [ ] Create `apps/api/src/modules/auth/application/dto/login.dto.ts`
 
 ```typescript
-import { IsEmail, IsString } from 'class-validator';
+import { IsEmail, IsString } from "class-validator";
 
 export class LoginDto {
   @IsEmail()
@@ -643,11 +650,11 @@ export class LoginDto {
 - [ ] Create `apps/api/src/modules/auth/application/dto/social-login.dto.ts`
 
 ```typescript
-import { IsEnum, IsString } from 'class-validator';
+import { IsEnum, IsString } from "class-validator";
 
 export enum SocialProvider {
-  GOOGLE = 'google',
-  APPLE = 'apple',
+  GOOGLE = "google",
+  APPLE = "apple",
 }
 
 export class SocialLoginDto {
@@ -675,12 +682,12 @@ Central data service for auth. Injects `IUserRepository` via token + `PrismaServ
 - `issueTokens(user)` — create JWT access token (15m) + refresh token, return `{ accessToken, refreshToken }`
 
 ```typescript
-import { Inject, Injectable } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
-import { v4 as uuidv4 } from 'uuid';
-import { USER_REPOSITORY } from '../../domain/interfaces/user-repository.token';
-import { IUserRepository } from '../../domain/interfaces/iuser.repository';
-import { PrismaService } from '../../../../prisma/prisma.service';
+import { Inject, Injectable } from "@nestjs/common";
+import { JwtService } from "@nestjs/jwt";
+import { v4 as uuidv4 } from "uuid";
+import { USER_REPOSITORY } from "../../domain/interfaces/user-repository.token";
+import { IUserRepository } from "../../domain/interfaces/iuser.repository";
+import { PrismaService } from "../../../../prisma/prisma.service";
 
 @Injectable()
 export class AuthDataService {
@@ -697,16 +704,31 @@ export class AuthDataService {
   async findUserById(id: string) {
     return this.userRepo.findUnique({
       where: { id },
-      select: { id: true, email: true, name: true, provider: true, avatarUrl: true, createdAt: true },
+      select: {
+        id: true,
+        email: true,
+        name: true,
+        provider: true,
+        avatarUrl: true,
+        createdAt: true,
+      },
     });
   }
 
-  async createUser(data: { email: string; passwordHash: string; name?: string }) {
+  async createUser(data: {
+    email: string;
+    passwordHash: string;
+    name?: string;
+  }) {
     return this.userRepo.create({ data });
   }
 
   async findOrCreateSocialUser(
-    provider: string, providerId: string, email: string | null, name: string | null, avatarUrl: string | null,
+    provider: string,
+    providerId: string,
+    email: string | null,
+    name: string | null,
+    avatarUrl: string | null,
   ) {
     const existing = await this.userRepo.findFirst({
       where: { provider, providerId },
@@ -743,7 +765,7 @@ export class AuthDataService {
 
   async issueTokens(user: { id: string; email?: string | null }) {
     const payload = { sub: user.id, email: user.email };
-    const accessToken = this.jwtService.sign(payload, { expiresIn: '15m' });
+    const accessToken = this.jwtService.sign(payload, { expiresIn: "15m" });
     const refreshToken = await this.createRefreshToken(user.id);
     return { accessToken, refreshToken };
   }
@@ -770,12 +792,12 @@ export class RegisterCommand {
 }
 
 // register.handler.ts
-import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { ConflictException } from '@nestjs/common';
-import * as bcrypt from 'bcryptjs';
-import { RegisterCommand } from './register.command';
-import { AuthDataService } from '../services/auth-data.service';
-import { PrismaService } from '../../../../prisma/prisma.service';
+import { CommandHandler, ICommandHandler } from "@nestjs/cqrs";
+import { ConflictException } from "@nestjs/common";
+import * as bcrypt from "bcryptjs";
+import { RegisterCommand } from "./register.command";
+import { AuthDataService } from "../services/auth-data.service";
+import { PrismaService } from "../../../../prisma/prisma.service";
 
 @CommandHandler(RegisterCommand)
 export class RegisterHandler implements ICommandHandler<RegisterCommand> {
@@ -786,7 +808,7 @@ export class RegisterHandler implements ICommandHandler<RegisterCommand> {
 
   async execute(command: RegisterCommand) {
     const existing = await this.authData.findUserByEmail(command.email);
-    if (existing) throw new ConflictException('Email already registered');
+    if (existing) throw new ConflictException("Email already registered");
 
     const passwordHash = await bcrypt.hash(command.password, 12);
     const user = await this.authData.createUser({
@@ -818,9 +840,10 @@ Same pattern as Register. Key logic:
 
 ```typescript
 const user = await this.authData.findUserByEmail(command.email);
-if (!user || !user.passwordHash) throw new UnauthorizedException('Invalid credentials');
+if (!user || !user.passwordHash)
+  throw new UnauthorizedException("Invalid credentials");
 const valid = await bcrypt.compare(command.password, user.passwordHash);
-if (!valid) throw new UnauthorizedException('Invalid credentials');
+if (!valid) throw new UnauthorizedException("Invalid credentials");
 return this.authData.issueTokens(user);
 ```
 
@@ -836,7 +859,7 @@ return this.authData.issueTokens(user);
 ```typescript
 const record = await this.authData.findRefreshToken(command.token);
 if (!record || record.expiresAt < new Date()) {
-  throw new UnauthorizedException('Invalid or expired refresh token');
+  throw new UnauthorizedException("Invalid or expired refresh token");
 }
 await this.authData.deleteRefreshToken(command.token);
 const user = await this.authData.findUserById(record.userId);
@@ -860,7 +883,11 @@ const ticket = await this.googleClient.verifyIdToken({
 });
 const payload = ticket.getPayload();
 const user = await this.authData.findOrCreateSocialUser(
-  'google', payload.sub, payload.email, payload.name, payload.picture,
+  "google",
+  payload.sub,
+  payload.email,
+  payload.name,
+  payload.picture,
 );
 ```
 
@@ -883,7 +910,7 @@ export class GetCurrentUserHandler implements IQueryHandler<GetCurrentUserQuery>
   constructor(private readonly authData: AuthDataService) {}
   async execute(query: GetCurrentUserQuery) {
     const user = await this.authData.findUserById(query.userId);
-    if (!user) throw new NotFoundException('User not found');
+    if (!user) throw new NotFoundException("User not found");
     return user;
   }
 }
@@ -896,9 +923,9 @@ export class GetCurrentUserHandler implements IQueryHandler<GetCurrentUserQuery>
 Passport JWT strategy. Extracts token from `Authorization: Bearer <token>` header, validates, returns `{ userId }` to attach to `request.user`.
 
 ```typescript
-import { Injectable } from '@nestjs/common';
-import { PassportStrategy } from '@nestjs/passport';
-import { ExtractJwt, Strategy } from 'passport-jwt';
+import { Injectable } from "@nestjs/common";
+import { PassportStrategy } from "@nestjs/passport";
+import { ExtractJwt, Strategy } from "passport-jwt";
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
@@ -923,8 +950,8 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 Not a Passport strategy — a service that wraps `google-auth-library`'s `OAuth2Client.verifyIdToken()`. Used by `SocialLoginHandler`.
 
 ```typescript
-import { Injectable } from '@nestjs/common';
-import { OAuth2Client } from 'google-auth-library';
+import { Injectable } from "@nestjs/common";
+import { OAuth2Client } from "google-auth-library";
 
 @Injectable()
 export class GoogleAuthService {
@@ -951,8 +978,8 @@ export class GoogleAuthService {
 Service wrapping `apple-signin-auth` to verify Apple authorization code / identity token. Used by `SocialLoginHandler`.
 
 ```typescript
-import { Injectable } from '@nestjs/common';
-import appleSignin from 'apple-signin-auth';
+import { Injectable } from "@nestjs/common";
+import appleSignin from "apple-signin-auth";
 
 @Injectable()
 export class AppleAuthService {
@@ -972,60 +999,58 @@ export class AppleAuthService {
 Routes → CommandBus / QueryBus. No business logic in controller.
 
 ```typescript
-import { Controller, Post, Get, Body, UseGuards } from '@nestjs/common';
-import { CommandBus, QueryBus } from '@nestjs/cqrs';
-import { RegisterDto } from '../application/dto/register.dto';
-import { LoginDto } from '../application/dto/login.dto';
-import { SocialLoginDto } from '../application/dto/social-login.dto';
-import { RegisterCommand } from '../application/commands/register.command';
-import { LoginCommand } from '../application/commands/login.command';
-import { RefreshTokenCommand } from '../application/commands/refresh-token.command';
-import { SocialLoginCommand } from '../application/commands/social-login.command';
-import { GetCurrentUserQuery } from '../application/queries/get-current-user.query';
-import { JwtAuthGuard } from '../../../common/guards/jwt-auth.guard';
-import { CurrentUser } from '../../../common/decorators/current-user.decorator';
+import { Controller, Post, Get, Body, UseGuards } from "@nestjs/common";
+import { CommandBus, QueryBus } from "@nestjs/cqrs";
+import { RegisterDto } from "../application/dto/register.dto";
+import { LoginDto } from "../application/dto/login.dto";
+import { SocialLoginDto } from "../application/dto/social-login.dto";
+import { RegisterCommand } from "../application/commands/register.command";
+import { LoginCommand } from "../application/commands/login.command";
+import { RefreshTokenCommand } from "../application/commands/refresh-token.command";
+import { SocialLoginCommand } from "../application/commands/social-login.command";
+import { GetCurrentUserQuery } from "../application/queries/get-current-user.query";
+import { JwtAuthGuard } from "../../../common/guards/jwt-auth.guard";
+import { CurrentUser } from "../../../common/decorators/current-user.decorator";
 
-@Controller('auth')
+@Controller("auth")
 export class AuthController {
   constructor(
     private readonly commandBus: CommandBus,
     private readonly queryBus: QueryBus,
   ) {}
 
-  @Post('register')
+  @Post("register")
   register(@Body() dto: RegisterDto) {
     return this.commandBus.execute(
       new RegisterCommand(dto.email, dto.password, dto.name),
     );
   }
 
-  @Post('login')
+  @Post("login")
   login(@Body() dto: LoginDto) {
-    return this.commandBus.execute(
-      new LoginCommand(dto.email, dto.password),
-    );
+    return this.commandBus.execute(new LoginCommand(dto.email, dto.password));
   }
 
-  @Post('refresh')
-  refresh(@Body('refreshToken') token: string) {
+  @Post("refresh")
+  refresh(@Body("refreshToken") token: string) {
     return this.commandBus.execute(new RefreshTokenCommand(token));
   }
 
-  @Post('google')
+  @Post("google")
   google(@Body() dto: SocialLoginDto) {
     return this.commandBus.execute(
       new SocialLoginCommand(dto.provider, dto.token),
     );
   }
 
-  @Post('apple')
+  @Post("apple")
   apple(@Body() dto: SocialLoginDto) {
     return this.commandBus.execute(
       new SocialLoginCommand(dto.provider, dto.token),
     );
   }
 
-  @Get('me')
+  @Get("me")
   @UseGuards(JwtAuthGuard)
   me(@CurrentUser() userId: string) {
     return this.queryBus.execute(new GetCurrentUserQuery(userId));
@@ -1038,33 +1063,38 @@ export class AuthController {
 - [ ] Create `apps/api/src/modules/auth/auth.module.ts`
 
 ```typescript
-import { Module } from '@nestjs/common';
-import { CqrsModule } from '@nestjs/cqrs';
-import { JwtModule } from '@nestjs/jwt';
-import { PassportModule } from '@nestjs/passport';
-import { AuthController } from './presentation/auth.controller';
-import { AuthDataService } from './application/services/auth-data.service';
-import { UserRepository } from './infrastructure/repositories/user.repository';
-import { USER_REPOSITORY } from './domain/interfaces/user-repository.token';
-import { JwtStrategy } from './infrastructure/strategies/jwt.strategy';
-import { GoogleAuthService } from './infrastructure/strategies/google.strategy';
-import { AppleAuthService } from './infrastructure/strategies/apple.strategy';
-import { RegisterHandler } from './application/commands/register.handler';
-import { LoginHandler } from './application/commands/login.handler';
-import { RefreshTokenHandler } from './application/commands/refresh-token.handler';
-import { SocialLoginHandler } from './application/commands/social-login.handler';
-import { GetCurrentUserHandler } from './application/queries/get-current-user.handler';
+import { Module } from "@nestjs/common";
+import { CqrsModule } from "@nestjs/cqrs";
+import { JwtModule } from "@nestjs/jwt";
+import { PassportModule } from "@nestjs/passport";
+import { AuthController } from "./presentation/auth.controller";
+import { AuthDataService } from "./application/services/auth-data.service";
+import { UserRepository } from "./infrastructure/repositories/user.repository";
+import { USER_REPOSITORY } from "./domain/interfaces/user-repository.token";
+import { JwtStrategy } from "./infrastructure/strategies/jwt.strategy";
+import { GoogleAuthService } from "./infrastructure/strategies/google.strategy";
+import { AppleAuthService } from "./infrastructure/strategies/apple.strategy";
+import { RegisterHandler } from "./application/commands/register.handler";
+import { LoginHandler } from "./application/commands/login.handler";
+import { RefreshTokenHandler } from "./application/commands/refresh-token.handler";
+import { SocialLoginHandler } from "./application/commands/social-login.handler";
+import { GetCurrentUserHandler } from "./application/queries/get-current-user.handler";
 
-const CommandHandlers = [RegisterHandler, LoginHandler, RefreshTokenHandler, SocialLoginHandler];
+const CommandHandlers = [
+  RegisterHandler,
+  LoginHandler,
+  RefreshTokenHandler,
+  SocialLoginHandler,
+];
 const QueryHandlers = [GetCurrentUserHandler];
 
 @Module({
   imports: [
     CqrsModule,
-    PassportModule.register({ defaultStrategy: 'jwt' }),
+    PassportModule.register({ defaultStrategy: "jwt" }),
     JwtModule.register({
       secret: process.env.JWT_SECRET,
-      signOptions: { expiresIn: '15m' },
+      signOptions: { expiresIn: "15m" },
     }),
   ],
   controllers: [AuthController],
@@ -1133,7 +1163,7 @@ export interface CounterPresetEntity {
 - [ ] Create `apps/api/src/modules/azkar/domain/interfaces/zikr-repository.token.ts`
 
 ```typescript
-export const ZIKR_REPOSITORY = Symbol('ZIKR_REPOSITORY');
+export const ZIKR_REPOSITORY = Symbol("ZIKR_REPOSITORY");
 ```
 
 ### Step 34: Domain — IZikrRepository
@@ -1141,8 +1171,8 @@ export const ZIKR_REPOSITORY = Symbol('ZIKR_REPOSITORY');
 - [ ] Create `apps/api/src/modules/azkar/domain/interfaces/izikr.repository.ts`
 
 ```typescript
-import { PrismaRepository } from '../../../../shared/repositories/prisma.repository';
-import { ZikrEntity } from '../entities/zikr.entity';
+import { PrismaRepository } from "../../../../shared/repositories/prisma.repository";
+import { ZikrEntity } from "../entities/zikr.entity";
 
 export interface IZikrRepository extends PrismaRepository<ZikrEntity> {}
 ```
@@ -1158,6 +1188,7 @@ Same pattern as UserRepository — extends `PrismaRepository`, `getDelegate()` r
 - [ ] Create `apps/api/src/modules/azkar/application/services/azkar-data.service.ts`
 
 Methods:
+
 - `getByCategory(category)` — find many where category, ordered by orderIndex asc
 - `getAll()` — all azkar ordered by category + orderIndex
 - `getById(id)` — find unique by id
@@ -1176,13 +1207,13 @@ export class AzkarDataService {
   async getByCategory(category: string) {
     return this.zikrRepo.findMany({
       where: { category },
-      orderBy: { orderIndex: 'asc' },
+      orderBy: { orderIndex: "asc" },
     });
   }
 
   async getAll() {
     return this.zikrRepo.findMany({
-      orderBy: [{ category: 'asc' }, { orderIndex: 'asc' }],
+      orderBy: [{ category: "asc" }, { orderIndex: "asc" }],
     });
   }
 
@@ -1192,7 +1223,7 @@ export class AzkarDataService {
 
   async getCounterPresets() {
     return this.prisma.counterPreset.findMany({
-      orderBy: { orderIndex: 'asc' },
+      orderBy: { orderIndex: "asc" },
     });
   }
 
@@ -1205,7 +1236,7 @@ export class AzkarDataService {
     await this.prisma.zikr.createMany({ data: azkar });
     await this.prisma.counterPreset.createMany({ data: presets });
     await this.prisma.contentVersion.create({
-      data: { key: 'azkar', version: 1 },
+      data: { key: "azkar", version: 1 },
     });
   }
 }
@@ -1244,14 +1275,14 @@ export class AzkarDataService {
 **Handler**: Imports morning/evening/night JSON from `@repo/data`, imports counter presets, maps to DB shape, calls `azkarData.seedAzkar(azkar, presets)`.
 
 ```typescript
-import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { SeedAzkarCommand } from './seed-azkar.command';
-import { AzkarDataService } from '../services/azkar-data.service';
+import { CommandHandler, ICommandHandler } from "@nestjs/cqrs";
+import { SeedAzkarCommand } from "./seed-azkar.command";
+import { AzkarDataService } from "../services/azkar-data.service";
 // Import seed data from shared package
-import morningAzkar from '@repo/data/azkar/morning.json';
-import eveningAzkar from '@repo/data/azkar/evening.json';
-import nightAzkar from '@repo/data/azkar/night.json';
-import counterPresets from '@repo/data/counter/presets.json';
+import morningAzkar from "@repo/data/azkar/morning.json";
+import eveningAzkar from "@repo/data/azkar/evening.json";
+import nightAzkar from "@repo/data/azkar/night.json";
+import counterPresets from "@repo/data/counter/presets.json";
 
 @CommandHandler(SeedAzkarCommand)
 export class SeedAzkarHandler implements ICommandHandler<SeedAzkarCommand> {
@@ -1259,9 +1290,17 @@ export class SeedAzkarHandler implements ICommandHandler<SeedAzkarCommand> {
 
   async execute() {
     const allAzkar = [
-      ...morningAzkar.map((z, i) => ({ ...z, category: 'morning', orderIndex: i })),
-      ...eveningAzkar.map((z, i) => ({ ...z, category: 'evening', orderIndex: i })),
-      ...nightAzkar.map((z, i) => ({ ...z, category: 'night', orderIndex: i })),
+      ...morningAzkar.map((z, i) => ({
+        ...z,
+        category: "morning",
+        orderIndex: i,
+      })),
+      ...eveningAzkar.map((z, i) => ({
+        ...z,
+        category: "evening",
+        orderIndex: i,
+      })),
+      ...nightAzkar.map((z, i) => ({ ...z, category: "night", orderIndex: i })),
     ];
 
     const presets = counterPresets.map((p, i) => ({ ...p, orderIndex: i }));
@@ -1279,10 +1318,10 @@ export class SeedAzkarHandler implements ICommandHandler<SeedAzkarCommand> {
 Runs on app startup. Checks if Zikr table is empty, if so dispatches `SeedAzkarCommand`:
 
 ```typescript
-import { Injectable, OnModuleInit, Logger } from '@nestjs/common';
-import { CommandBus } from '@nestjs/cqrs';
-import { PrismaService } from '../../../../prisma/prisma.service';
-import { SeedAzkarCommand } from '../../application/commands/seed-azkar.command';
+import { Injectable, OnModuleInit, Logger } from "@nestjs/common";
+import { CommandBus } from "@nestjs/cqrs";
+import { PrismaService } from "../../../../prisma/prisma.service";
+import { SeedAzkarCommand } from "../../application/commands/seed-azkar.command";
 
 @Injectable()
 export class AzkarSeeder implements OnModuleInit {
@@ -1296,9 +1335,11 @@ export class AzkarSeeder implements OnModuleInit {
   async onModuleInit() {
     const count = await this.prisma.zikr.count();
     if (count === 0) {
-      this.logger.log('Zikr table empty — seeding azkar data...');
+      this.logger.log("Zikr table empty — seeding azkar data...");
       const result = await this.commandBus.execute(new SeedAzkarCommand());
-      this.logger.log(`Seeded ${result.seeded} azkar + ${result.presets} presets`);
+      this.logger.log(
+        `Seeded ${result.seeded} azkar + ${result.presets} presets`,
+      );
     }
   }
 }
@@ -1311,34 +1352,34 @@ export class AzkarSeeder implements OnModuleInit {
 All endpoints are **public** (no auth required):
 
 ```typescript
-import { Controller, Get, Query } from '@nestjs/common';
-import { QueryBus } from '@nestjs/cqrs';
-import { GetAzkarByCategoryQuery } from '../application/queries/get-azkar-by-category.query';
-import { GetAzkarVersionQuery } from '../application/queries/get-azkar-version.query';
-import { GetCounterPresetsQuery } from '../application/queries/get-counter-presets.query';
+import { Controller, Get, Query } from "@nestjs/common";
+import { QueryBus } from "@nestjs/cqrs";
+import { GetAzkarByCategoryQuery } from "../application/queries/get-azkar-by-category.query";
+import { GetAzkarVersionQuery } from "../application/queries/get-azkar-version.query";
+import { GetCounterPresetsQuery } from "../application/queries/get-counter-presets.query";
 
-@Controller('azkar')
+@Controller("azkar")
 export class AzkarController {
   constructor(private readonly queryBus: QueryBus) {}
 
   @Get()
-  getByCategory(@Query('category') category: string) {
+  getByCategory(@Query("category") category: string) {
     return this.queryBus.execute(new GetAzkarByCategoryQuery(category));
   }
 
-  @Get('version')
+  @Get("version")
   getVersion() {
     return this.queryBus.execute(new GetAzkarVersionQuery());
   }
 
-  @Get('all')
+  @Get("all")
   getAll() {
     return this.queryBus.execute(new GetAzkarByCategoryQuery(null)); // handler returns all if null
   }
 }
 
 // Separate controller for counter-presets at /counter-presets
-@Controller('counter-presets')
+@Controller("counter-presets")
 export class CounterPresetsController {
   constructor(private readonly queryBus: QueryBus) {}
 
@@ -1354,20 +1395,27 @@ export class CounterPresetsController {
 - [ ] Create `apps/api/src/modules/azkar/azkar.module.ts`
 
 ```typescript
-import { Module } from '@nestjs/common';
-import { CqrsModule } from '@nestjs/cqrs';
-import { AzkarController, CounterPresetsController } from './presentation/azkar.controller';
-import { AzkarDataService } from './application/services/azkar-data.service';
-import { ZikrRepository } from './infrastructure/repositories/zikr.repository';
-import { ZIKR_REPOSITORY } from './domain/interfaces/zikr-repository.token';
-import { AzkarSeeder } from './infrastructure/seeders/azkar.seeder';
-import { SeedAzkarHandler } from './application/commands/seed-azkar.handler';
-import { GetAzkarByCategoryHandler } from './application/queries/get-azkar-by-category.handler';
-import { GetAzkarVersionHandler } from './application/queries/get-azkar-version.handler';
-import { GetCounterPresetsHandler } from './application/queries/get-counter-presets.handler';
+import { Module } from "@nestjs/common";
+import { CqrsModule } from "@nestjs/cqrs";
+import {
+  AzkarController,
+  CounterPresetsController,
+} from "./presentation/azkar.controller";
+import { AzkarDataService } from "./application/services/azkar-data.service";
+import { ZikrRepository } from "./infrastructure/repositories/zikr.repository";
+import { ZIKR_REPOSITORY } from "./domain/interfaces/zikr-repository.token";
+import { AzkarSeeder } from "./infrastructure/seeders/azkar.seeder";
+import { SeedAzkarHandler } from "./application/commands/seed-azkar.handler";
+import { GetAzkarByCategoryHandler } from "./application/queries/get-azkar-by-category.handler";
+import { GetAzkarVersionHandler } from "./application/queries/get-azkar-version.handler";
+import { GetCounterPresetsHandler } from "./application/queries/get-counter-presets.handler";
 
 const CommandHandlers = [SeedAzkarHandler];
-const QueryHandlers = [GetAzkarByCategoryHandler, GetAzkarVersionHandler, GetCounterPresetsHandler];
+const QueryHandlers = [
+  GetAzkarByCategoryHandler,
+  GetAzkarVersionHandler,
+  GetCounterPresetsHandler,
+];
 
 @Module({
   imports: [CqrsModule],
@@ -1411,6 +1459,7 @@ Extends `PrismaRepository`, `getDelegate()` returns `this.prisma.dailyProgress`.
 - [ ] Create `apps/api/src/modules/progress/application/services/progress-data.service.ts`
 
 Methods:
+
 - `getByDateAndUser(userId, date)` — find all DailyProgress for user+date (all categories)
 - `upsertProgress(userId, date, category, completedIds, inProgress)` — upsert using unique constraint `[userId, date, category]`
 - `getStreak(userId)` — find streak record for user
@@ -1462,7 +1511,7 @@ async updateStreak(userId: string, date: string) {
 All endpoints **protected** with `@UseGuards(JwtAuthGuard)`:
 
 ```typescript
-@Controller('progress')
+@Controller("progress")
 @UseGuards(JwtAuthGuard)
 export class ProgressController {
   constructor(
@@ -1471,18 +1520,27 @@ export class ProgressController {
   ) {}
 
   @Get()
-  getProgress(@CurrentUser() userId: string, @Query('date') date: string) {
+  getProgress(@CurrentUser() userId: string, @Query("date") date: string) {
     return this.queryBus.execute(new GetDailyProgressQuery(userId, date));
   }
 
   @Put()
-  upsertProgress(@CurrentUser() userId: string, @Body() body: UpsertProgressDto) {
+  upsertProgress(
+    @CurrentUser() userId: string,
+    @Body() body: UpsertProgressDto,
+  ) {
     return this.commandBus.execute(
-      new UpsertProgressCommand(userId, body.date, body.category, body.completedIds, body.inProgress),
+      new UpsertProgressCommand(
+        userId,
+        body.date,
+        body.category,
+        body.completedIds,
+        body.inProgress,
+      ),
     );
   }
 
-  @Get('streak')
+  @Get("streak")
   getStreak(@CurrentUser() userId: string) {
     return this.queryBus.execute(new GetStreakQuery(userId));
   }
@@ -1518,6 +1576,7 @@ Same pattern as previous modules — imports `CqrsModule`, registers repository 
 - [ ] Create `apps/api/src/modules/counter/application/services/counter-data.service.ts`
 
 Methods:
+
 - `getByUserId(userId)` — find unique by userId
 - `saveState(userId, current, target, presetId?, customLabel?)` — upsert counter state
 
@@ -1538,7 +1597,7 @@ Methods:
 Protected endpoints:
 
 ```typescript
-@Controller('counter')
+@Controller("counter")
 @UseGuards(JwtAuthGuard)
 export class CounterController {
   constructor(
@@ -1554,7 +1613,13 @@ export class CounterController {
   @Put()
   save(@CurrentUser() userId: string, @Body() body: SaveCounterDto) {
     return this.commandBus.execute(
-      new SaveCounterCommand(userId, body.current, body.target, body.presetId, body.customLabel),
+      new SaveCounterCommand(
+        userId,
+        body.current,
+        body.target,
+        body.presetId,
+        body.customLabel,
+      ),
     );
   }
 }
@@ -1589,6 +1654,7 @@ Same pattern — CqrsModule, repository + token, data service, handlers, control
 - [ ] Create `apps/api/src/modules/favorites/application/services/favorites-data.service.ts`
 
 Methods:
+
 - `getByUserId(userId)` — find many where userId, include zikr relation if needed
 - `addFavorite(userId, zikrId)` — create favorite (unique constraint prevents duplicates)
 - `removeFavorite(userId, zikrId)` — delete where userId+zikrId
@@ -1614,7 +1680,7 @@ Methods:
 Protected endpoints:
 
 ```typescript
-@Controller('favorites')
+@Controller("favorites")
 @UseGuards(JwtAuthGuard)
 export class FavoritesController {
   constructor(
@@ -1627,13 +1693,19 @@ export class FavoritesController {
     return this.queryBus.execute(new GetFavoritesQuery(userId));
   }
 
-  @Post(':zikrId')
-  add(@CurrentUser() userId: string, @Param('zikrId', ParseIntPipe) zikrId: number) {
+  @Post(":zikrId")
+  add(
+    @CurrentUser() userId: string,
+    @Param("zikrId", ParseIntPipe) zikrId: number,
+  ) {
     return this.commandBus.execute(new AddFavoriteCommand(userId, zikrId));
   }
 
-  @Delete(':zikrId')
-  remove(@CurrentUser() userId: string, @Param('zikrId', ParseIntPipe) zikrId: number) {
+  @Delete(":zikrId")
+  remove(
+    @CurrentUser() userId: string,
+    @Param("zikrId", ParseIntPipe) zikrId: number,
+  ) {
     return this.commandBus.execute(new RemoveFavoriteCommand(userId, zikrId));
   }
 }
@@ -1668,6 +1740,7 @@ Same pattern — CqrsModule, repository + token, data service, handlers, control
 - [ ] Create `apps/api/src/modules/preferences/application/services/preferences-data.service.ts`
 
 Methods:
+
 - `getByUserId(userId)` — find unique where userId
 - `updatePreferences(userId, data)` — upsert (create defaults if not exists, update partial fields)
 
@@ -1688,7 +1761,7 @@ Methods:
 Protected endpoints:
 
 ```typescript
-@Controller('preferences')
+@Controller("preferences")
 @UseGuards(JwtAuthGuard)
 export class PreferencesController {
   constructor(
@@ -1703,9 +1776,7 @@ export class PreferencesController {
 
   @Patch()
   update(@CurrentUser() userId: string, @Body() body: UpdatePreferencesDto) {
-    return this.commandBus.execute(
-      new UpdatePreferencesCommand(userId, body),
-    );
+    return this.commandBus.execute(new UpdatePreferencesCommand(userId, body));
   }
 }
 ```
@@ -1727,18 +1798,18 @@ Same pattern — CqrsModule, repository + token, data service, handlers, control
 Import PrismaModule (global) + ConfigModule + all 6 domain modules:
 
 ```typescript
-import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
-import { CqrsModule } from '@nestjs/cqrs';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { PrismaModule } from './prisma/prisma.module';
-import { AuthModule } from './modules/auth/auth.module';
-import { AzkarModule } from './modules/azkar/azkar.module';
-import { ProgressModule } from './modules/progress/progress.module';
-import { CounterModule } from './modules/counter/counter.module';
-import { FavoritesModule } from './modules/favorites/favorites.module';
-import { PreferencesModule } from './modules/preferences/preferences.module';
+import { Module } from "@nestjs/common";
+import { ConfigModule } from "@nestjs/config";
+import { CqrsModule } from "@nestjs/cqrs";
+import { AppController } from "./app.controller";
+import { AppService } from "./app.service";
+import { PrismaModule } from "./prisma/prisma.module";
+import { AuthModule } from "./modules/auth/auth.module";
+import { AzkarModule } from "./modules/azkar/azkar.module";
+import { ProgressModule } from "./modules/progress/progress.module";
+import { CounterModule } from "./modules/counter/counter.module";
+import { FavoritesModule } from "./modules/favorites/favorites.module";
+import { PreferencesModule } from "./modules/preferences/preferences.module";
 
 @Module({
   imports: [
@@ -1765,17 +1836,17 @@ export class AppModule {}
 Add global validation pipe, response interceptor, exception filter, API prefix, CORS config:
 
 ```typescript
-import { NestFactory } from '@nestjs/core';
-import { ValidationPipe } from '@nestjs/common';
-import { AppModule } from './app.module';
-import { ResponseInterceptor } from './common/interceptors/response.interceptor';
-import { HttpExceptionFilter } from './common/filters/http-exception.filter';
+import { NestFactory } from "@nestjs/core";
+import { ValidationPipe } from "@nestjs/common";
+import { AppModule } from "./app.module";
+import { ResponseInterceptor } from "./common/interceptors/response.interceptor";
+import { HttpExceptionFilter } from "./common/filters/http-exception.filter";
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   // Global prefix
-  app.setGlobalPrefix('api/v1');
+  app.setGlobalPrefix("api/v1");
 
   // Validation
   app.useGlobalPipes(
@@ -1795,8 +1866,8 @@ async function bootstrap() {
   // CORS
   app.enableCors({
     origin: [
-      'http://localhost:3000', // Next.js web
-      'http://localhost:3002', // Storybook or other dev tools
+      "http://localhost:3000", // Next.js web
+      "http://localhost:3002", // Storybook or other dev tools
     ],
     credentials: true,
   });
@@ -1851,108 +1922,108 @@ bootstrap();
 
 All paths relative to `apps/api/src/`:
 
-| # | File | Description |
-|---|------|-------------|
-| 1 | `prisma/schema.prisma` (in `apps/api/prisma/`) | Full Prisma 7 schema — 10 models |
-| 2 | `prisma/prisma.service.ts` | PrismaClient + PrismaPg adapter + pg.Pool |
-| 3 | `prisma/prisma.module.ts` | Global PrismaModule |
-| 4 | `shared/repositories/irepository.interface.ts` | Base IRepository interface |
-| 5 | `shared/repositories/prisma.repository.ts` | Abstract PrismaRepository\<T\> base |
-| 6 | `common/decorators/current-user.decorator.ts` | @CurrentUser() param decorator |
-| 7 | `common/guards/jwt-auth.guard.ts` | JWT AuthGuard |
-| 8 | `common/guards/optional-auth.guard.ts` | Optional JWT guard |
-| 9 | `common/interceptors/response.interceptor.ts` | Wraps responses in { success, data } |
-| 10 | `common/filters/http-exception.filter.ts` | Standard error format |
-| 11 | `modules/auth/domain/entities/user.entity.ts` | UserEntity interface |
-| 12 | `modules/auth/domain/interfaces/user-repository.token.ts` | USER_REPOSITORY Symbol |
-| 13 | `modules/auth/domain/interfaces/iuser.repository.ts` | IUserRepository interface |
-| 14 | `modules/auth/infrastructure/repositories/user.repository.ts` | UserRepository (Prisma) |
-| 15 | `modules/auth/infrastructure/strategies/jwt.strategy.ts` | Passport JWT Strategy |
-| 16 | `modules/auth/infrastructure/strategies/google.strategy.ts` | Google OAuth service |
-| 17 | `modules/auth/infrastructure/strategies/apple.strategy.ts` | Apple OAuth service |
-| 18 | `modules/auth/application/dto/register.dto.ts` | RegisterDto |
-| 19 | `modules/auth/application/dto/login.dto.ts` | LoginDto |
-| 20 | `modules/auth/application/dto/social-login.dto.ts` | SocialLoginDto |
-| 21 | `modules/auth/application/services/auth-data.service.ts` | AuthDataService |
-| 22 | `modules/auth/application/commands/register.command.ts` | RegisterCommand |
-| 23 | `modules/auth/application/commands/register.handler.ts` | RegisterHandler |
-| 24 | `modules/auth/application/commands/login.command.ts` | LoginCommand |
-| 25 | `modules/auth/application/commands/login.handler.ts` | LoginHandler |
-| 26 | `modules/auth/application/commands/refresh-token.command.ts` | RefreshTokenCommand |
-| 27 | `modules/auth/application/commands/refresh-token.handler.ts` | RefreshTokenHandler |
-| 28 | `modules/auth/application/commands/social-login.command.ts` | SocialLoginCommand |
-| 29 | `modules/auth/application/commands/social-login.handler.ts` | SocialLoginHandler |
-| 30 | `modules/auth/application/queries/get-current-user.query.ts` | GetCurrentUserQuery |
-| 31 | `modules/auth/application/queries/get-current-user.handler.ts` | GetCurrentUserHandler |
-| 32 | `modules/auth/presentation/auth.controller.ts` | AuthController (6 endpoints) |
-| 33 | `modules/auth/auth.module.ts` | AuthModule wiring |
-| 34 | `modules/azkar/domain/entities/zikr.entity.ts` | ZikrEntity interface |
-| 35 | `modules/azkar/domain/entities/counter-preset.entity.ts` | CounterPresetEntity interface |
-| 36 | `modules/azkar/domain/interfaces/zikr-repository.token.ts` | ZIKR_REPOSITORY Symbol |
-| 37 | `modules/azkar/domain/interfaces/izikr.repository.ts` | IZikrRepository interface |
-| 38 | `modules/azkar/infrastructure/repositories/zikr.repository.ts` | ZikrRepository (Prisma) |
-| 39 | `modules/azkar/infrastructure/seeders/azkar.seeder.ts` | AzkarSeeder (OnModuleInit) |
-| 40 | `modules/azkar/application/services/azkar-data.service.ts` | AzkarDataService |
-| 41 | `modules/azkar/application/commands/seed-azkar.command.ts` | SeedAzkarCommand |
-| 42 | `modules/azkar/application/commands/seed-azkar.handler.ts` | SeedAzkarHandler |
-| 43 | `modules/azkar/application/queries/get-azkar-by-category.query.ts` | Query |
-| 44 | `modules/azkar/application/queries/get-azkar-by-category.handler.ts` | Handler |
-| 45 | `modules/azkar/application/queries/get-azkar-version.query.ts` | Query |
-| 46 | `modules/azkar/application/queries/get-azkar-version.handler.ts` | Handler |
-| 47 | `modules/azkar/application/queries/get-counter-presets.query.ts` | Query |
-| 48 | `modules/azkar/application/queries/get-counter-presets.handler.ts` | Handler |
-| 49 | `modules/azkar/presentation/azkar.controller.ts` | AzkarController + CounterPresetsController |
-| 50 | `modules/azkar/azkar.module.ts` | AzkarModule wiring |
-| 51 | `modules/progress/domain/entities/daily-progress.entity.ts` | DailyProgressEntity |
-| 52 | `modules/progress/domain/entities/streak.entity.ts` | StreakEntity |
-| 53 | `modules/progress/domain/interfaces/progress-repository.token.ts` | PROGRESS_REPOSITORY Symbol |
-| 54 | `modules/progress/domain/interfaces/iprogress.repository.ts` | IProgressRepository |
-| 55 | `modules/progress/infrastructure/repositories/progress.repository.ts` | ProgressRepository |
-| 56 | `modules/progress/application/services/progress-data.service.ts` | ProgressDataService |
-| 57 | `modules/progress/application/commands/upsert-progress.command.ts` | Command |
-| 58 | `modules/progress/application/commands/upsert-progress.handler.ts` | Handler |
-| 59 | `modules/progress/application/commands/update-streak.command.ts` | Command |
-| 60 | `modules/progress/application/commands/update-streak.handler.ts` | Handler |
-| 61 | `modules/progress/application/queries/get-daily-progress.query.ts` | Query |
-| 62 | `modules/progress/application/queries/get-daily-progress.handler.ts` | Handler |
-| 63 | `modules/progress/application/queries/get-streak.query.ts` | Query |
-| 64 | `modules/progress/application/queries/get-streak.handler.ts` | Handler |
-| 65 | `modules/progress/presentation/progress.controller.ts` | ProgressController |
-| 66 | `modules/progress/progress.module.ts` | ProgressModule |
-| 67 | `modules/counter/domain/entities/counter-state.entity.ts` | CounterStateEntity |
-| 68 | `modules/counter/domain/interfaces/counter-repository.token.ts` | COUNTER_REPOSITORY Symbol |
-| 69 | `modules/counter/domain/interfaces/icounter.repository.ts` | ICounterRepository |
-| 70 | `modules/counter/infrastructure/repositories/counter.repository.ts` | CounterRepository |
-| 71 | `modules/counter/application/services/counter-data.service.ts` | CounterDataService |
-| 72 | `modules/counter/application/commands/save-counter.command.ts` | Command |
-| 73 | `modules/counter/application/commands/save-counter.handler.ts` | Handler |
-| 74 | `modules/counter/application/queries/get-counter.query.ts` | Query |
-| 75 | `modules/counter/application/queries/get-counter.handler.ts` | Handler |
-| 76 | `modules/counter/presentation/counter.controller.ts` | CounterController |
-| 77 | `modules/counter/counter.module.ts` | CounterModule |
-| 78 | `modules/favorites/domain/entities/favorite.entity.ts` | FavoriteEntity |
-| 79 | `modules/favorites/domain/interfaces/favorite-repository.token.ts` | FAVORITE_REPOSITORY Symbol |
-| 80 | `modules/favorites/domain/interfaces/ifavorite.repository.ts` | IFavoriteRepository |
-| 81 | `modules/favorites/infrastructure/repositories/favorite.repository.ts` | FavoriteRepository |
-| 82 | `modules/favorites/application/services/favorites-data.service.ts` | FavoritesDataService |
-| 83 | `modules/favorites/application/commands/add-favorite.command.ts` | Command |
-| 84 | `modules/favorites/application/commands/add-favorite.handler.ts` | Handler |
-| 85 | `modules/favorites/application/commands/remove-favorite.command.ts` | Command |
-| 86 | `modules/favorites/application/commands/remove-favorite.handler.ts` | Handler |
-| 87 | `modules/favorites/application/queries/get-favorites.query.ts` | Query |
-| 88 | `modules/favorites/application/queries/get-favorites.handler.ts` | Handler |
-| 89 | `modules/favorites/presentation/favorites.controller.ts` | FavoritesController |
-| 90 | `modules/favorites/favorites.module.ts` | FavoritesModule |
-| 91 | `modules/preferences/domain/entities/preferences.entity.ts` | PreferencesEntity |
-| 92 | `modules/preferences/domain/interfaces/preferences-repository.token.ts` | PREFERENCES_REPOSITORY Symbol |
-| 93 | `modules/preferences/domain/interfaces/ipreferences.repository.ts` | IPreferencesRepository |
-| 94 | `modules/preferences/infrastructure/repositories/preferences.repository.ts` | PreferencesRepository |
-| 95 | `modules/preferences/application/services/preferences-data.service.ts` | PreferencesDataService |
-| 96 | `modules/preferences/application/commands/update-preferences.command.ts` | Command |
-| 97 | `modules/preferences/application/commands/update-preferences.handler.ts` | Handler |
-| 98 | `modules/preferences/application/queries/get-preferences.query.ts` | Query |
-| 99 | `modules/preferences/application/queries/get-preferences.handler.ts` | Handler |
-| 100 | `modules/preferences/presentation/preferences.controller.ts` | PreferencesController |
-| 101 | `modules/preferences/preferences.module.ts` | PreferencesModule |
-| 102 | `app.module.ts` | **Updated** — imports all modules |
-| 103 | `main.ts` | **Updated** — global pipes, interceptors, filters, CORS, prefix |
+| #   | File                                                                        | Description                                                     |
+| --- | --------------------------------------------------------------------------- | --------------------------------------------------------------- |
+| 1   | `prisma/schema.prisma` (in `apps/api/prisma/`)                              | Full Prisma 7 schema — 10 models                                |
+| 2   | `prisma/prisma.service.ts`                                                  | PrismaClient + PrismaPg adapter + pg.Pool                       |
+| 3   | `prisma/prisma.module.ts`                                                   | Global PrismaModule                                             |
+| 4   | `shared/repositories/irepository.interface.ts`                              | Base IRepository interface                                      |
+| 5   | `shared/repositories/prisma.repository.ts`                                  | Abstract PrismaRepository\<T\> base                             |
+| 6   | `common/decorators/current-user.decorator.ts`                               | @CurrentUser() param decorator                                  |
+| 7   | `common/guards/jwt-auth.guard.ts`                                           | JWT AuthGuard                                                   |
+| 8   | `common/guards/optional-auth.guard.ts`                                      | Optional JWT guard                                              |
+| 9   | `common/interceptors/response.interceptor.ts`                               | Wraps responses in { success, data }                            |
+| 10  | `common/filters/http-exception.filter.ts`                                   | Standard error format                                           |
+| 11  | `modules/auth/domain/entities/user.entity.ts`                               | UserEntity interface                                            |
+| 12  | `modules/auth/domain/interfaces/user-repository.token.ts`                   | USER_REPOSITORY Symbol                                          |
+| 13  | `modules/auth/domain/interfaces/iuser.repository.ts`                        | IUserRepository interface                                       |
+| 14  | `modules/auth/infrastructure/repositories/user.repository.ts`               | UserRepository (Prisma)                                         |
+| 15  | `modules/auth/infrastructure/strategies/jwt.strategy.ts`                    | Passport JWT Strategy                                           |
+| 16  | `modules/auth/infrastructure/strategies/google.strategy.ts`                 | Google OAuth service                                            |
+| 17  | `modules/auth/infrastructure/strategies/apple.strategy.ts`                  | Apple OAuth service                                             |
+| 18  | `modules/auth/application/dto/register.dto.ts`                              | RegisterDto                                                     |
+| 19  | `modules/auth/application/dto/login.dto.ts`                                 | LoginDto                                                        |
+| 20  | `modules/auth/application/dto/social-login.dto.ts`                          | SocialLoginDto                                                  |
+| 21  | `modules/auth/application/services/auth-data.service.ts`                    | AuthDataService                                                 |
+| 22  | `modules/auth/application/commands/register.command.ts`                     | RegisterCommand                                                 |
+| 23  | `modules/auth/application/commands/register.handler.ts`                     | RegisterHandler                                                 |
+| 24  | `modules/auth/application/commands/login.command.ts`                        | LoginCommand                                                    |
+| 25  | `modules/auth/application/commands/login.handler.ts`                        | LoginHandler                                                    |
+| 26  | `modules/auth/application/commands/refresh-token.command.ts`                | RefreshTokenCommand                                             |
+| 27  | `modules/auth/application/commands/refresh-token.handler.ts`                | RefreshTokenHandler                                             |
+| 28  | `modules/auth/application/commands/social-login.command.ts`                 | SocialLoginCommand                                              |
+| 29  | `modules/auth/application/commands/social-login.handler.ts`                 | SocialLoginHandler                                              |
+| 30  | `modules/auth/application/queries/get-current-user.query.ts`                | GetCurrentUserQuery                                             |
+| 31  | `modules/auth/application/queries/get-current-user.handler.ts`              | GetCurrentUserHandler                                           |
+| 32  | `modules/auth/presentation/auth.controller.ts`                              | AuthController (6 endpoints)                                    |
+| 33  | `modules/auth/auth.module.ts`                                               | AuthModule wiring                                               |
+| 34  | `modules/azkar/domain/entities/zikr.entity.ts`                              | ZikrEntity interface                                            |
+| 35  | `modules/azkar/domain/entities/counter-preset.entity.ts`                    | CounterPresetEntity interface                                   |
+| 36  | `modules/azkar/domain/interfaces/zikr-repository.token.ts`                  | ZIKR_REPOSITORY Symbol                                          |
+| 37  | `modules/azkar/domain/interfaces/izikr.repository.ts`                       | IZikrRepository interface                                       |
+| 38  | `modules/azkar/infrastructure/repositories/zikr.repository.ts`              | ZikrRepository (Prisma)                                         |
+| 39  | `modules/azkar/infrastructure/seeders/azkar.seeder.ts`                      | AzkarSeeder (OnModuleInit)                                      |
+| 40  | `modules/azkar/application/services/azkar-data.service.ts`                  | AzkarDataService                                                |
+| 41  | `modules/azkar/application/commands/seed-azkar.command.ts`                  | SeedAzkarCommand                                                |
+| 42  | `modules/azkar/application/commands/seed-azkar.handler.ts`                  | SeedAzkarHandler                                                |
+| 43  | `modules/azkar/application/queries/get-azkar-by-category.query.ts`          | Query                                                           |
+| 44  | `modules/azkar/application/queries/get-azkar-by-category.handler.ts`        | Handler                                                         |
+| 45  | `modules/azkar/application/queries/get-azkar-version.query.ts`              | Query                                                           |
+| 46  | `modules/azkar/application/queries/get-azkar-version.handler.ts`            | Handler                                                         |
+| 47  | `modules/azkar/application/queries/get-counter-presets.query.ts`            | Query                                                           |
+| 48  | `modules/azkar/application/queries/get-counter-presets.handler.ts`          | Handler                                                         |
+| 49  | `modules/azkar/presentation/azkar.controller.ts`                            | AzkarController + CounterPresetsController                      |
+| 50  | `modules/azkar/azkar.module.ts`                                             | AzkarModule wiring                                              |
+| 51  | `modules/progress/domain/entities/daily-progress.entity.ts`                 | DailyProgressEntity                                             |
+| 52  | `modules/progress/domain/entities/streak.entity.ts`                         | StreakEntity                                                    |
+| 53  | `modules/progress/domain/interfaces/progress-repository.token.ts`           | PROGRESS_REPOSITORY Symbol                                      |
+| 54  | `modules/progress/domain/interfaces/iprogress.repository.ts`                | IProgressRepository                                             |
+| 55  | `modules/progress/infrastructure/repositories/progress.repository.ts`       | ProgressRepository                                              |
+| 56  | `modules/progress/application/services/progress-data.service.ts`            | ProgressDataService                                             |
+| 57  | `modules/progress/application/commands/upsert-progress.command.ts`          | Command                                                         |
+| 58  | `modules/progress/application/commands/upsert-progress.handler.ts`          | Handler                                                         |
+| 59  | `modules/progress/application/commands/update-streak.command.ts`            | Command                                                         |
+| 60  | `modules/progress/application/commands/update-streak.handler.ts`            | Handler                                                         |
+| 61  | `modules/progress/application/queries/get-daily-progress.query.ts`          | Query                                                           |
+| 62  | `modules/progress/application/queries/get-daily-progress.handler.ts`        | Handler                                                         |
+| 63  | `modules/progress/application/queries/get-streak.query.ts`                  | Query                                                           |
+| 64  | `modules/progress/application/queries/get-streak.handler.ts`                | Handler                                                         |
+| 65  | `modules/progress/presentation/progress.controller.ts`                      | ProgressController                                              |
+| 66  | `modules/progress/progress.module.ts`                                       | ProgressModule                                                  |
+| 67  | `modules/counter/domain/entities/counter-state.entity.ts`                   | CounterStateEntity                                              |
+| 68  | `modules/counter/domain/interfaces/counter-repository.token.ts`             | COUNTER_REPOSITORY Symbol                                       |
+| 69  | `modules/counter/domain/interfaces/icounter.repository.ts`                  | ICounterRepository                                              |
+| 70  | `modules/counter/infrastructure/repositories/counter.repository.ts`         | CounterRepository                                               |
+| 71  | `modules/counter/application/services/counter-data.service.ts`              | CounterDataService                                              |
+| 72  | `modules/counter/application/commands/save-counter.command.ts`              | Command                                                         |
+| 73  | `modules/counter/application/commands/save-counter.handler.ts`              | Handler                                                         |
+| 74  | `modules/counter/application/queries/get-counter.query.ts`                  | Query                                                           |
+| 75  | `modules/counter/application/queries/get-counter.handler.ts`                | Handler                                                         |
+| 76  | `modules/counter/presentation/counter.controller.ts`                        | CounterController                                               |
+| 77  | `modules/counter/counter.module.ts`                                         | CounterModule                                                   |
+| 78  | `modules/favorites/domain/entities/favorite.entity.ts`                      | FavoriteEntity                                                  |
+| 79  | `modules/favorites/domain/interfaces/favorite-repository.token.ts`          | FAVORITE_REPOSITORY Symbol                                      |
+| 80  | `modules/favorites/domain/interfaces/ifavorite.repository.ts`               | IFavoriteRepository                                             |
+| 81  | `modules/favorites/infrastructure/repositories/favorite.repository.ts`      | FavoriteRepository                                              |
+| 82  | `modules/favorites/application/services/favorites-data.service.ts`          | FavoritesDataService                                            |
+| 83  | `modules/favorites/application/commands/add-favorite.command.ts`            | Command                                                         |
+| 84  | `modules/favorites/application/commands/add-favorite.handler.ts`            | Handler                                                         |
+| 85  | `modules/favorites/application/commands/remove-favorite.command.ts`         | Command                                                         |
+| 86  | `modules/favorites/application/commands/remove-favorite.handler.ts`         | Handler                                                         |
+| 87  | `modules/favorites/application/queries/get-favorites.query.ts`              | Query                                                           |
+| 88  | `modules/favorites/application/queries/get-favorites.handler.ts`            | Handler                                                         |
+| 89  | `modules/favorites/presentation/favorites.controller.ts`                    | FavoritesController                                             |
+| 90  | `modules/favorites/favorites.module.ts`                                     | FavoritesModule                                                 |
+| 91  | `modules/preferences/domain/entities/preferences.entity.ts`                 | PreferencesEntity                                               |
+| 92  | `modules/preferences/domain/interfaces/preferences-repository.token.ts`     | PREFERENCES_REPOSITORY Symbol                                   |
+| 93  | `modules/preferences/domain/interfaces/ipreferences.repository.ts`          | IPreferencesRepository                                          |
+| 94  | `modules/preferences/infrastructure/repositories/preferences.repository.ts` | PreferencesRepository                                           |
+| 95  | `modules/preferences/application/services/preferences-data.service.ts`      | PreferencesDataService                                          |
+| 96  | `modules/preferences/application/commands/update-preferences.command.ts`    | Command                                                         |
+| 97  | `modules/preferences/application/commands/update-preferences.handler.ts`    | Handler                                                         |
+| 98  | `modules/preferences/application/queries/get-preferences.query.ts`          | Query                                                           |
+| 99  | `modules/preferences/application/queries/get-preferences.handler.ts`        | Handler                                                         |
+| 100 | `modules/preferences/presentation/preferences.controller.ts`                | PreferencesController                                           |
+| 101 | `modules/preferences/preferences.module.ts`                                 | PreferencesModule                                               |
+| 102 | `app.module.ts`                                                             | **Updated** — imports all modules                               |
+| 103 | `main.ts`                                                                   | **Updated** — global pipes, interceptors, filters, CORS, prefix |

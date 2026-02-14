@@ -4,73 +4,129 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Gold-dominant light theme */
+    --background: 40 100% 98%;          /* #FFFBF5 warm cream */
+    --foreground: 24 10% 10%;           /* #1C1917 warm black */
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
- 
+    --card: 0 0% 100%;                  /* #FFFFFF */
+    --card-foreground: 24 10% 10%;
+
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
- 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
- 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
- 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
- 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
- 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --popover-foreground: 24 10% 10%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
- 
-    --radius: 0.5rem;
+    --primary: 38 92% 50%;              /* #F59E0B gold-500 */
+    --primary-foreground: 30 50% 3%;    /* #0D0B08 dark-base */
+
+    --secondary: 40 60% 95%;            /* #FEF8F0 light-surface */
+    --secondary-foreground: 28 73% 16%; /* #451A03 gold-950 */
+
+    --muted: 40 60% 95%;
+    --muted-foreground: 28 44% 29%;     /* #78350F gold-900 */
+
+    --accent: 40 60% 95%;
+    --accent-foreground: 28 73% 16%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 40 50% 88%;               /* gold-200 muted */
+    --input: 40 50% 88%;
+    --ring: 38 92% 50%;                 /* gold-500 */
+
+    --radius: 12px;
   }
- 
+
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
- 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
- 
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
- 
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
- 
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
- 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
- 
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
- 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
- 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
+    /* Gold-dominant dark theme — warm browns, not cold gray */
+    --background: 30 25% 3%;            /* #0D0B08 dark-base */
+    --foreground: 45 80% 78%;           /* #FDE68A gold-200 */
+
+    --card: 32 20% 8%;                  /* #1A1510 dark-card */
+    --card-foreground: 45 80% 78%;
+
+    --popover: 32 20% 8%;
+    --popover-foreground: 45 80% 78%;
+
+    --primary: 38 92% 50%;              /* #F59E0B gold-500 */
+    --primary-foreground: 30 25% 3%;    /* #0D0B08 dark-base */
+
+    --secondary: 33 22% 12%;            /* #262015 dark-elevated */
+    --secondary-foreground: 45 80% 78%;
+
+    --muted: 33 22% 12%;
+    --muted-foreground: 32 66% 38%;     /* #B45309 gold-700 */
+
+    --accent: 33 22% 12%;
+    --accent-foreground: 45 80% 78%;
+
+    --destructive: 0 63% 31%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 32 66% 20%;               /* gold-800 at reduced opacity */
+    --input: 32 66% 20%;
+    --ring: 38 92% 50%;
   }
 }
- 
+
 @layer base {
   * {
     @apply border-border;
   }
   body {
     @apply bg-background text-foreground;
+    font-family: var(--font-tajawal), "Tajawal", sans-serif;
+  }
+  html {
+    @apply scroll-smooth;
+  }
+}
+
+@layer utilities {
+  /* Islamic geometric background texture (inline SVG — no external file) */
+  .bg-texture {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Cg fill='none' stroke='%23D4A855' stroke-width='0.4' opacity='0.12'%3E%3Cpath d='M40 0L80 40L40 80L0 40Z'/%3E%3Cpath d='M40 10L70 40L40 70L10 40Z'/%3E%3Cpath d='M40 20L60 40L40 60L20 40Z'/%3E%3Cpath d='M0 0L40 0L40 40L0 40Z'/%3E%3Cpath d='M40 0L80 0L80 40L40 40Z'/%3E%3Cpath d='M0 40L40 40L40 80L0 80Z'/%3E%3Cpath d='M40 40L80 40L80 80L40 80Z'/%3E%3C/g%3E%3C/svg%3E");
+    background-size: 80px 80px;
+    background-repeat: repeat;
+  }
+
+  .dark .bg-texture {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Cg fill='none' stroke='%23B45309' stroke-width='0.4' opacity='0.08'%3E%3Cpath d='M40 0L80 40L40 80L0 40Z'/%3E%3Cpath d='M40 10L70 40L40 70L10 40Z'/%3E%3Cpath d='M40 20L60 40L40 60L20 40Z'/%3E%3Cpath d='M0 0L40 0L40 40L0 40Z'/%3E%3Cpath d='M40 0L80 0L80 40L40 40Z'/%3E%3Cpath d='M0 40L40 40L40 80L0 80Z'/%3E%3Cpath d='M40 40L80 40L80 80L40 80Z'/%3E%3C/g%3E%3C/svg%3E");
+  }
+
+  /* 8-pointed Islamic star clip-path (for badge variants) */
+  .star-badge {
+    clip-path: polygon(
+      50% 0%, 61% 15%, 79% 6%, 75% 25%, 97% 30%,
+      85% 45%, 100% 58%, 82% 63%, 85% 82%,
+      67% 75%, 58% 95%, 50% 80%, 42% 95%,
+      33% 75%, 15% 82%, 18% 63%, 0% 58%,
+      15% 45%, 3% 30%, 25% 25%, 21% 6%, 39% 15%
+    );
+  }
+
+  /* Arabic text helpers */
+  .arabic-text {
+    @apply text-right leading-relaxed;
+    font-feature-settings: "liga" 1, "calt" 1;
+  }
+
+  /* Completion checkmark animation */
+  @keyframes checkmark {
+    0% { transform: scale(0); opacity: 0; }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); opacity: 1; }
+  }
+  .animate-checkmark {
+    animation: checkmark 0.4s ease-out forwards;
+  }
+
+  /* Counter bounce animation */
+  @keyframes count-bounce {
+    0% { transform: scale(1); }
+    30% { transform: scale(1.15); }
+    100% { transform: scale(1); }
+  }
+  .animate-count-bounce {
+    animation: count-bounce 0.2s ease-out;
   }
 }

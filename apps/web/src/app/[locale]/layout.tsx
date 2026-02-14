@@ -1,29 +1,51 @@
-import {NextIntlClientProvider, useMessages} from 'next-intl';
-import { cairo } from '@/lib/fonts';
+import { getMessages } from "next-intl/server";
+import { NextIntlClientProvider } from "next-intl";
+import { tajawal } from "@/lib/fonts";
 import "../globals.css";
-import { ThemeProvider } from '@/components/theme-provider';
+import { ThemeProvider } from "@/components/theme-provider";
+import { QueryProvider } from "@/providers/query-provider";
+import { AuthProvider } from "@/providers/auth-provider";
+import { BottomNav } from "@/components/bottom-nav";
 
-export default function RootLayout({
+export const metadata = {
+  title: "ذِكر | Zikr",
+  description:
+    "تطبيق الأذكار والتسبيح — Morning, Evening & Night Azkar with Counter",
+  manifest: "/manifest.json",
+  themeColor: "#F59E0B",
+};
+
+export default async function RootLayout({
   children,
-  params: {locale}
+  params: { locale },
 }: {
   children: React.ReactNode;
-  params: {locale: string};
+  params: { locale: string };
 }) {
-  const messages = useMessages();
-  const direction = locale === 'ar' ? 'rtl' : 'ltr';
+  const messages = await getMessages();
+  const direction = locale === "ar" ? "rtl" : "ltr";
 
   return (
-    <html lang={locale} dir={direction} suppressHydrationWarning>
-      <body className={cairo.className}>
+    <html
+      lang={locale}
+      dir={direction}
+      className={tajawal.variable}
+      suppressHydrationWarning
+    >
+      <body className={`${tajawal.className} bg-texture`}>
         <NextIntlClientProvider locale={locale} messages={messages}>
-           <ThemeProvider
+          <ThemeProvider
             attribute="class"
-            defaultTheme="system"
+            defaultTheme="dark"
             enableSystem
             disableTransitionOnChange
           >
-            {children}
+            <QueryProvider>
+              <AuthProvider>
+                <main className="min-h-screen pb-20">{children}</main>
+                <BottomNav />
+              </AuthProvider>
+            </QueryProvider>
           </ThemeProvider>
         </NextIntlClientProvider>
       </body>

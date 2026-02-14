@@ -1,0 +1,1 @@
+export const COUNTER_REPOSITORY = Symbol("COUNTER_REPOSITORY");

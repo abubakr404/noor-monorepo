@@ -1,11 +1,90 @@
 {
-  "Index": {
-    "title": "Scalable Monorepo",
-    "description": "A high scalability monorepo boilerplate."
+  "Index": { "title": "Zikr", "description": "Azkar & Tasbih" },
+  "Nav": {
+    "home": "Home",
+    "counter": "Counter",
+    "favorites": "Favorites",
+    "settings": "Settings"
   },
-  "Theme": {
-      "light": "Light",
-      "dark": "Dark",
-      "system": "System"
+  "Home": {
+    "subtitle": "Start your day with remembrance",
+    "counter": "Tasbih Counter",
+    "counterDesc": "Count your dhikr",
+    "loginPrompt": "Sign in to save your progress"
+  },
+  "Azkar": {
+    "title": {
+      "morning": "Morning Azkar",
+      "evening": "Evening Azkar",
+      "night": "Night Azkar"
+    },
+    "loading": "Loading...",
+    "resetAll": "Reset All",
+    "progress": "{completed} / {total} completed"
+  },
+  "ZikrDetail": {
+    "readTimes": "Read it {count} times",
+    "next": "Next",
+    "backToHome": "Back to Home",
+    "tapToCount": "Tap to count"
+  },
+  "Counter": {
+    "title": "Tasbih Counter",
+    "reset": "Reset",
+    "targetReached": "Well done! Target reached",
+    "custom": "Custom"
+  },
+  "Favorites": {
+    "title": "Favorites",
+    "empty": "No favorites yet",
+    "emptyHint": "Add your favorite azkar by tapping the heart icon"
+  },
+  "Settings": {
+    "title": "Settings",
+    "language": "Language",
+    "theme": "Theme",
+    "counterMode": "Counter Mode",
+    "interactive": "Interactive",
+    "display": "Display Only",
+    "sound": "Sound",
+    "vibration": "Vibration",
+    "account": "Account",
+    "login": "Sign In",
+    "logout": "Sign Out",
+    "resetProgress": "Reset Progress",
+    "resetConfirm": "Are you sure? All your progress will be deleted.",
+    "arabic": "العربية",
+    "english": "English",
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System"
+  },
+  "Auth": {
+    "login": "Sign In",
+    "register": "Create Account",
+    "email": "Email",
+    "password": "Password",
+    "name": "Name",
+    "orContinueWith": "Or continue with",
+    "google": "Google",
+    "apple": "Apple",
+    "noAccount": "Don't have an account?",
+    "hasAccount": "Already have an account?",
+    "signUp": "Sign Up",
+    "signIn": "Sign In"
+  },
+  "Streak": {
+    "day": "Day {count}"
+  },
+  "Period": {
+    "morning": "Morning Azkar",
+    "evening": "Evening Azkar",
+    "night": "Night Azkar"
+  },
+  "Theme": { "light": "Light", "dark": "Dark", "system": "System" },
+  "Errors": {
+    "generic": "Something went wrong, please try again",
+    "invalidCredentials": "Invalid email or password",
+    "emailExists": "Email is already registered"
   }
 }

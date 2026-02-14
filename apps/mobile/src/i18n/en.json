@@ -1,0 +1,51 @@
+{
+  "nav": {
+    "home": "Home",
+    "counter": "Counter",
+    "favorites": "Favorites",
+    "settings": "Settings"
+  },
+  "home": {
+    "subtitle": "Start your day with remembrance",
+    "counter": "Tasbih Counter",
+    "counterDesc": "Count your dhikr"
+  },
+  "azkar": {
+    "morning": "Morning Azkar",
+    "evening": "Evening Azkar",
+    "night": "Night Azkar",
+    "loading": "Loading...",
+    "back": "Back"
+  },
+  "detail": {
+    "next": "Next",
+    "backToHome": "Back to Home",
+    "readTimes": "Read it {{count}} times"
+  },
+  "counter": {
+    "title": "Tasbih Counter",
+    "reset": "Reset",
+    "targetReached": "Well done! Target reached"
+  },
+  "favorites": {
+    "title": "Favorites",
+    "empty": "No favorites yet",
+    "emptyHint": "Add your favorite azkar by tapping the heart icon"
+  },
+  "settings": {
+    "title": "Settings",
+    "language": "Language",
+    "theme": "Theme",
+    "counterMode": "Counter Mode",
+    "interactive": "Interactive",
+    "display": "Display Only",
+    "resetProgress": "Reset Progress",
+    "arabic": "العربية",
+    "english": "English",
+    "light": "Light",
+    "dark": "Dark"
+  },
+  "streak": {
+    "day": "Day {{count}}"
+  }
+}
